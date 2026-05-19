@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة تمويل التداول - دخول الأعضاء</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- أيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- خلفية متحركة بخطوط بيانية -->
+    <div class="animated-bg"></div>
+    
+    <div class="main-container">
+        <!-- القسم الأيمن: نموذج تسجيل الدخول -->
+        <div class="login-section">
+            <div class="glass-card">
+                <div class="logo-area">
+                    <img src="https://via.placeholder.com/60?text=TRADE" alt="Logo" class="logo">
+                    <h1>Traders<span>Fund</span></h1>
+                    <p>منصة التمويل الأولى للمتداولين المحترفين</p>
+                </div>
+
+                <form id="loginForm">
+                    <div class="input-field">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="كلمة المرور" required>
+                    </div>
+                    <button type="submit" id="loginBtn" class="btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> دخول
+                    </button>
+                </form>
+
+                <!-- زر تسجيل الدخول عبر Google -->
+                <button id="googleLoginBtn" class="btn-google">
+                    <i class="fab fa-google"></i> تسجيل الدخول باستخدام Google
+                </button>
+
+                <div id="errorMessage" class="error-message"></div>
+                
+                <div class="links">
+                    <a href="forgot-password.html">نسيت كلمة المرور؟</a>
+                    <a href="register.html">إنشاء حساب جديد</a>
+                </div>
+                
+                <div class="trust-badge">
+                    <i class="fas fa-shield-alt"></i> نظام حماية متقدم
+                </div>
+            </div>
+        </div>
+
+        <!-- القسم الأيسر: معلومات الشركة والإحصائيات -->
+        <div class="info-section">
+            <div class="stats">
+                <div class="stat-item">
+                    <h3>+10,000</h3>
+                    <p>متداول مموّل</p>
+                </div>
+                <div class="stat-item">
+                    <h3>$150M</h3>
+                    <p>إجمالي الأرباح المسحوبة</p>
+                </div>
+                <div class="stat-item">
+                    <h3>1:100</h3>
+                    <p>رافعة مالية</p>
+                </div>
+            </div>
+
+            <div class="features">
+                <h2>لماذا تختار منصتنا؟</h2>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> حساب تجريبي بقيمة $100,000</li>
+                    <li><i class="fas fa-check-circle"></i> سحوبات فورية خلال 24 ساعة</li>
+                    <li><i class="fas fa-check-circle"></i> دعم فني على مدار الساعة</li>
+                    <li><i class="fas fa-check-circle"></i> خصم 20% على رسوم التمويل للعضوية الأولى</li>
+                </ul>
+            </div>
+
+            <div class="testimonial">
+                <i class="fas fa-quote-right"></i>
+                <p>"تم تمويلي بمبلغ $200,000 بفضل أدائي في التحدي. أفضل منصة تداول!"</p>
+                <span>- أحمد K.، متداول معتمد</span>
+            </div>
+
+            <div class="market-graph">
+                <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400" alt="رسم بياني للتداول">
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
