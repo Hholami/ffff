@@ -19,83 +19,66 @@ const db = getFirestore(app);
 
 const registerForm = document.getElementById('registerForm');
 const errorDiv = document.getElementById('errorMessage');
-const successDiv = document.getElementById('successMessage');
 
 registerForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    // 1. أخذ البيانات من النموذج
     const fullName = document.getElementById('fullName').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
     
-    // 2. مسح الرسائل القديمة
     errorDiv.innerText = "";
-    successDiv.innerText = "";
     
-    // 3. التحقق من صحة البيانات
+    // التحقق من البيانات
     if (password !== confirmPassword) {
-        errorDiv.innerText = "❌ كلمة المرور وتأكيدها غير متطابقين";
+        errorDiv.innerText = "❌ كلمة المرور غير متطابقة";
         return;
     }
     
     if (password.length < 6) {
-        errorDiv.innerText = "❌ كلمة المرور يجب أن تكون 6 أحرف على الأقل";
+        errorDiv.innerText = "❌ كلمة المرور يجب أن تكون 6 أحرف أو أكثر";
         return;
     }
     
-    // 4. تعطيل الزر أثناء المعالجة
     const btn = registerForm.querySelector('button');
     btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري إنشاء الحساب...';
+    btn.innerHTML = 'جاري إنشاء الحساب...';
     
     try {
-        // 5. إنشاء حساب في Firebase Authentication
+        // إنشاء حساب في Firebase Authentication
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         
-        // 6. تحديث الاسم في Authentication
+        // تحديث الاسم
         await updateProfile(user, { displayName: fullName });
         
-        // 7. حفظ البيانات في Firestore (قاعدة البيانات) 🔥
+        // حفظ البيانات في Firestore
         await setDoc(doc(db, "users", user.uid), {
             fullName: fullName,
             email: email,
             createdAt: new Date(),
-            virtualBalance: 100000,      // رصيد تجريبي
-            tradingChallenge: "not_started",
-            accountStatus: "active"
+            virtualBalance: 100000,
+            tradingChallenge: "not_started"
         });
         
-        // 8. رسالة نجاح
-        successDiv.innerText = "✅ تم إنشاء الحساب وحفظ البيانات بنجاح! جاري تحويلك إلى صفحة تسجيل الدخول...";
-        
-        // 9. الانتقال إلى صفحة تسجيل الدخول بعد 2 ثانية
-        setTimeout(() => {
-            window.location.href = "index.html";
-        }, 2000);
+        // ✅ انتقل فوراً إلى صفحة تسجيل الدخول
+        window.location.href = "index.html";
         
     } catch (error) {
-        // 10. معالجة الأخطاء
         let msg = "";
         switch (error.code) {
             case 'auth/email-already-in-use':
-                msg = "❌ هذا البريد الإلكتروني مسجل بالفعل. الرجاء استخدام بريد آخر أو تسجيل الدخول.";
+                msg = "❌ هذا البريد مسجل بالفعل";
                 break;
             case 'auth/invalid-email':
-                msg = "❌ البريد الإلكتروني غير صالح";
-                break;
-            case 'auth/weak-password':
-                msg = "❌ كلمة المرور ضعيفة جداً (استخدم 6 أحرف على الأقل)";
+                msg = "❌ بريد إلكتروني غير صالح";
                 break;
             default:
                 msg = "❌ خطأ: " + error.message;
         }
         errorDiv.innerText = msg;
-    } finally {
-        // 11. إعادة تفعيل الزر
         btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-user-plus"></i> إنشاء حساب';
+        btn.innerHTML = 'إنشاء حساب';
     }
 });
