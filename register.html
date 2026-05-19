@@ -6,6 +6,29 @@
     <title>إنشاء حساب جديد - منصة التمويل</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* رسائل النجاح والخطأ */
+        .success-message {
+            background: rgba(0, 255, 100, 0.2);
+            border: 1px solid #00ff64;
+            color: #00ff64;
+            padding: 10px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        .error-message {
+            background: rgba(255, 0, 0, 0.2);
+            border: 1px solid #ff4444;
+            color: #ff8888;
+            padding: 10px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
     <div class="animated-bg"></div>
@@ -36,7 +59,7 @@
                         <i class="fas fa-lock"></i>
                         <input type="password" id="confirmPassword" placeholder="تأكيد كلمة المرور" required>
                     </div>
-                    <button type="submit" class="btn-primary">
+                    <button type="submit" id="submitBtn" class="btn-primary">
                         <i class="fas fa-user-plus"></i> إنشاء حساب
                     </button>
                 </form>
@@ -72,7 +95,110 @@
         </div>
     </div>
 
-    <!-- ✅ هذا السطر هو الحل! -->
-    <script type="module" src="register.js"></script>
+    <script type="module">
+        // استيراد Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+        // إعدادات Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDIGQ8MTdb3XzJ8w4CuktSADkLF9MUZIYI",
+            authDomain: "tradingfinanceapp.firebaseapp.com",
+            projectId: "tradingfinanceapp",
+            storageBucket: "tradingfinanceapp.firebasestorage.app",
+            messagingSenderId: "901228416943",
+            appId: "1:901228416943:web:013b973250d7b4fa4ce95a",
+            measurementId: "G-59C97Y8TB5"
+        };
+
+        // تهيئة Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // عناصر الصفحة
+        const registerForm = document.getElementById('registerForm');
+        const errorDiv = document.getElementById('errorMessage');
+        const successDiv = document.getElementById('successMessage');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // عند الضغط على زر إنشاء حساب
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // جلب البيانات
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // مسح الرسائل القديمة
+            errorDiv.innerText = "";
+            successDiv.innerText = "";
+            
+            // التحقق من البيانات
+            if (!fullName || !email || !password) {
+                errorDiv.innerText = "❌ الرجاء ملء جميع الحقول";
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                errorDiv.innerText = "❌ كلمة المرور وتأكيدها غير متطابقين";
+                return;
+            }
+            
+            if (password.length < 6) {
+                errorDiv.innerText = "❌ كلمة المرور يجب أن تكون 6 أحرف على الأقل";
+                return;
+            }
+            
+            // تغيير نص الزر أثناء المعالجة
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري إنشاء الحساب...';
+            
+            try {
+                // 1. إنشاء حساب في Firebase Authentication
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                
+                // 2. تحديث الاسم
+                await updateProfile(user, { displayName: fullName });
+                
+                // 3. حفظ البيانات في Firestore
+                await setDoc(doc(db, "users", user.uid), {
+                    fullName: fullName,
+                    email: email,
+                    createdAt: new Date(),
+                    virtualBalance: 100000,
+                    tradingChallenge: "not_started"
+                });
+                
+                // 4. ✅ الانتقال إلى صفحة تسجيل الدخول فوراً
+                window.location.href = "index.html";
+                
+            } catch (error) {
+                // ظهور الخطأ
+                let msg = "";
+                switch (error.code) {
+                    case 'auth/email-already-in-use':
+                        msg = "❌ هذا البريد الإلكتروني مسجل بالفعل";
+                        break;
+                    case 'auth/invalid-email':
+                        msg = "❌ البريد الإلكتروني غير صالح";
+                        break;
+                    case 'auth/weak-password':
+                        msg = "❌ كلمة المرور ضعيفة جداً";
+                        break;
+                    default:
+                        msg = "❌ خطأ: " + error.message;
+                }
+                errorDiv.innerText = msg;
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        });
+    </script>
 </body>
 </html>
