@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إنشاء حساب جديد</title>
+    <title>إنشاء حساب جديد - منصة التمويل</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -14,8 +14,9 @@
         <div class="login-section">
             <div class="glass-card">
                 <div class="logo-area">
+                    <img src="https://via.placeholder.com/60?text=TRADE" alt="Logo" class="logo">
                     <h1>Traders<span>Fund</span></h1>
-                    <p>إنشاء حساب جديد</p>
+                    <p>إنشاء حساب جديد للتمويل</p>
                 </div>
 
                 <form id="registerForm">
@@ -36,39 +37,65 @@
                         <input type="password" id="confirmPassword" placeholder="تأكيد كلمة المرور" required>
                     </div>
                     <button type="submit" id="submitBtn" class="btn-primary">
-                        إنشاء حساب
+                        <i class="fas fa-user-plus"></i> إنشاء حساب
                     </button>
                 </form>
 
-                <div id="errorMessage" class="error-message" style="color: red; margin-top: 10px;"></div>
+                <div id="errorMessage" class="error-message"></div>
+                <div id="successMessage" class="success-message"></div>
+
                 <div class="links">
                     <a href="index.html">← عودة إلى تسجيل الدخول</a>
                 </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <div class="stats">
+                <div class="stat-item">
+                    <h3>+10,000</h3>
+                    <p>متداول مموّل</p>
+                </div>
+                <div class="stat-item">
+                    <h3>$150M</h3>
+                    <p>إجمالي الأرباح</p>
+                </div>
+            </div>
+            <div class="features">
+                <h2>ماذا تحصل عند التسجيل؟</h2>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> حساب تجريبي $100,000</li>
+                    <li><i class="fas fa-check-circle"></i> خصم 20% على أول تمويل</li>
+                    <li><i class="fas fa-check-circle"></i> خطة تدريب مجانية</li>
+                </ul>
             </div>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+        import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
         import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
+        // 🔥 إعدادات المشروع الجديد
         const firebaseConfig = {
-            apiKey: "AIzaSyDIGQ8MTdb3XzJ8w4CuktSADkLF9MUZIYI",
-            authDomain: "tradingfinanceapp.firebaseapp.com",
-            projectId: "tradingfinanceapp",
-            storageBucket: "tradingfinanceapp.firebasestorage.app",
-            messagingSenderId: "901228416943",
-            appId: "1:901228416943:web:013b973250d7b4fa4ce95a",
-            measurementId: "G-59C97Y8TB5"
+            apiKey: "AIzaSyANR5zRHfDn5j8u8uQUj5fg9dPRmn_ZlyI",
+            authDomain: "tradingfinanceapp-9e2e2.firebaseapp.com",
+            projectId: "tradingfinanceapp-9e2e2",
+            storageBucket: "tradingfinanceapp-9e2e2.firebasestorage.app",
+            messagingSenderId: "395030573606",
+            appId: "1:395030573606:web:d226e06ed382eb723f6ce7",
+            measurementId: "G-M8MR66T1RG"
         };
 
+        // تهيئة Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
         const form = document.getElementById('registerForm');
         const errorDiv = document.getElementById('errorMessage');
+        const successDiv = document.getElementById('successMessage');
         const submitBtn = document.getElementById('submitBtn');
 
         form.addEventListener('submit', async (e) => {
@@ -80,6 +107,7 @@
             const confirmPassword = document.getElementById('confirmPassword').value;
             
             errorDiv.innerText = "";
+            successDiv.innerText = "";
             
             // التحقق من صحة البيانات
             if (!fullName || !email || !password) {
@@ -97,32 +125,48 @@
                 return;
             }
             
-            // تعطيل الزر وتغيير نصه
+            // تعطيل الزر
             submitBtn.disabled = true;
-            submitBtn.innerHTML = 'جاري إنشاء الحساب...';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري إنشاء الحساب...';
             
             try {
-                // 1. إنشاء الحساب في Auth
+                // 1. إنشاء حساب في Authentication
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
                 
-                // 2. حفظ البيانات في Firestore
+                // 2. تحديث الاسم
+                await updateProfile(user, { displayName: fullName });
+                
+                // 3. حفظ البيانات في Firestore
                 await setDoc(doc(db, "users", user.uid), {
                     fullName: fullName,
                     email: email,
                     createdAt: new Date(),
-                    virtualBalance: 100000
+                    virtualBalance: 100000,
+                    tradingChallenge: "not_started"
                 });
                 
-                // 3. الانتقال إلى صفحة تسجيل الدخول
-                // استخدام replace بدلاً من href لمنع الرجوع للخلف
-                window.location.replace("index.html");
+                // 4. عرض رسالة نجاح
+                successDiv.innerText = "✅ تم إنشاء الحساب بنجاح! جاري التحويل...";
+                
+                // 5. الانتقال إلى صفحة تسجيل الدخول بعد 1 ثانية
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                }, 1000);
                 
             } catch (error) {
-                console.error("خطأ كامل:", error);
-                errorDiv.innerText = "❌ خطأ: " + error.message;
+                console.error("خطأ:", error);
+                let msg = error.message;
+                if (error.code === 'auth/email-already-in-use') {
+                    msg = "هذا البريد الإلكتروني مسجل بالفعل";
+                } else if (error.code === 'auth/invalid-email') {
+                    msg = "البريد الإلكتروني غير صالح";
+                } else if (error.code === 'auth/weak-password') {
+                    msg = "كلمة المرور ضعيفة جداً (استخدم 6 أحرف على الأقل)";
+                }
+                errorDiv.innerText = "❌ " + msg;
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = 'إنشاء حساب';
+                submitBtn.innerHTML = '<i class="fas fa-user-plus"></i> إنشاء حساب';
             }
         });
     </script>
