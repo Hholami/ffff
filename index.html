@@ -1,696 +1,383 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>FundingPro | لوحة التمويل الاحترافية</title>
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<!-- Font Awesome 6 -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<!-- Chart.js للرسوم البيانية -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول | منصة تمويل التداول</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  body {
-    font-family: 'Inter', sans-serif;
-    transition: background-color 0.25s ease, color 0.2s ease;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-  }
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0a0f2c 0%, #0c1225 100%);
+            position: relative;
+            overflow-x: hidden;
+        }
 
-  /* Light theme */
-  body.light {
-    --bg-primary: #F8FAFC;
-    --bg-secondary: #FFFFFF;
-    --bg-elevated: #FFFFFF;
-    --surface-card: #F1F5F9;
-    --text-primary: #0F172A;
-    --text-secondary: #334155;
-    --text-muted: #475569;
-    --border-color: #E2E8F0;
-    --accent: #2563EB;
-    --accent-hover: #1D4ED8;
-    --sidebar-bg: #FFFFFF;
-    --topbar-bg: rgba(255,255,255,0.96);
-    --stat-bg: #FFFFFF;
-    --card-bg: #FFFFFF;
-    --hero-bg: linear-gradient(125deg, #F1F5F9 0%, #E2E8F0 100%);
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.05);
-    --icon-hover: #1E293B;
-  }
+        /* خلفية متحركة */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 40%, rgba(0, 224, 255, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+            z-index: -1;
+        }
 
-  /* Dark theme */
-  body.dark {
-    --bg-primary: #0B1120;
-    --bg-secondary: #0F172A;
-    --bg-elevated: #111827;
-    --surface-card: #1E293B;
-    --text-primary: #F1F5F9;
-    --text-secondary: #CBD5E1;
-    --text-muted: #94A3B8;
-    --border-color: #1E293B;
-    --accent: #3B82F6;
-    --accent-hover: #60A5FA;
-    --sidebar-bg: #0F172A;
-    --topbar-bg: rgba(17, 24, 39, 0.98);
-    --stat-bg: #111827;
-    --card-bg: #111827;
-    --hero-bg: linear-gradient(125deg, #111827 0%, #0A0F1C 100%);
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
-    --icon-hover: #E2E8F0;
-  }
+        .bg-animation::before {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.08"><path fill="none" stroke="%2300e0ff" stroke-width="0.8" d="M10 10 L90 10 M10 30 L90 30 M10 50 L90 50 M10 70 L90 70 M10 90 L90 90 M10 10 L10 90 M30 10 L30 90 M50 10 L50 90 M70 10 L70 90 M90 10 L90 90"/></svg>');
+            background-repeat: repeat;
+            animation: moveGrid 30s linear infinite;
+        }
 
-  body {
-    background: var(--bg-primary);
-    color: var(--text-primary);
-  }
+        @keyframes moveGrid {
+            0% { transform: translate(0,0); }
+            100% { transform: translate(40px,40px); }
+        }
 
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: var(--border-color);
-  }
-  ::-webkit-scrollbar-thumb {
-    background: var(--text-muted);
-    border-radius: 8px;
-  }
+        /* الحاوية الرئيسية */
+        .login-wrapper {
+            width: 1200px;
+            max-width: 95%;
+            display: flex;
+            background: rgba(15, 25, 45, 0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 48px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            border: 1px solid rgba(0, 224, 255, 0.3);
+            z-index: 10;
+        }
 
-  /* Topbar */
-  .topbar {
-    height: 70px;
-    background: var(--topbar-bg);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 28px;
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 1100;
-    box-shadow: var(--shadow-sm);
-  }
+        /* قسم تسجيل الدخول */
+        .login-form {
+            flex: 1;
+            padding: 48px 40px;
+            background: rgba(10, 15, 35, 0.8);
+            backdrop-filter: blur(8px);
+        }
 
-  .logo {
-    font-size: 1.65rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, var(--text-primary), var(--accent));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    letter-spacing: -0.3px;
-  }
+        .logo-area {
+            text-align: center;
+            margin-bottom: 40px;
+        }
 
-  .lang-btn, .profile-btn, .menu-btn, .theme-toggle-btn {
-    background: var(--surface-card);
-    border: 1px solid var(--border-color);
-    color: var(--text-secondary);
-    padding: 8px 16px;
-    border-radius: 40px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-weight: 500;
-    font-size: 0.85rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
+        .logo-area h1 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #fff, #00e0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+        }
 
-  .lang-btn:hover, .profile-btn:hover, .menu-btn:hover, .theme-toggle-btn:hover {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: white;
-    transform: translateY(-1px);
-  }
+        .logo-area p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
 
-  /* Sidebar */
-  .sidebar {
-    width: 280px;
-    background: var(--sidebar-bg);
-    height: 100vh;
-    position: fixed;
-    top: 70px;
-    right: 0;
-    padding: 28px 20px;
-    transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-    overflow-y: auto;
-    border-left: 1px solid var(--border-color);
-    z-index: 1050;
-  }
+        .input-group {
+            position: relative;
+            margin-bottom: 24px;
+        }
 
-  .sidebar:not(.hide) {
-    transform: translateX(0);
-  }
-  .sidebar.hide {
-    transform: translateX(100%);
-  }
-  .sidebar nav {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .sidebar a {
-    text-decoration: none;
-    color: var(--text-muted);
-    padding: 12px 18px;
-    border-radius: 14px;
-    transition: all 0.2s;
-    font-size: 0.95rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .sidebar a i {
-    width: 20px;
-    font-size: 1.1rem;
-  }
-  .sidebar a:hover, .sidebar a.active {
-    background: var(--accent);
-    color: white;
-    box-shadow: var(--shadow-sm);
-  }
+        .input-group i {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #00e0ff;
+            font-size: 1.1rem;
+        }
 
-  /* Main content */
-  .main {
-    margin-top: 70px;
-    margin-right: 280px;
-    padding: 36px 32px;
-    transition: margin-right 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-    min-height: calc(100vh - 70px);
-  }
-  .main.full {
-    margin-right: 0;
-  }
+        .input-group input {
+            width: 100%;
+            padding: 14px 48px 14px 20px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 40px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
 
-  /* Hero section */
-  .hero {
-    background: var(--hero-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 2rem;
-    padding: 44px 48px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 40px;
-    margin-bottom: 48px;
-    box-shadow: var(--shadow-md);
-  }
-  .hero-text h1 {
-    font-size: 2.5rem;
-    line-height: 1.3;
-    margin-bottom: 18px;
-    font-weight: 700;
-    background: linear-gradient(to left, var(--text-primary), var(--accent));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-  .hero-text p {
-    color: var(--text-secondary);
-    line-height: 1.75;
-    margin-bottom: 28px;
-  }
-  .primary-btn {
-    background: var(--accent);
-    border: none;
-    color: white;
-    padding: 12px 28px;
-    border-radius: 40px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s;
-  }
-  .primary-btn:hover {
-    background: var(--accent-hover);
-    transform: scale(1.02);
-  }
-  .secondary-btn {
-    background: var(--surface-card);
-    border: 1px solid var(--border-color);
-    color: var(--text-secondary);
-    padding: 12px 28px;
-    border-radius: 40px;
-    font-weight: 500;
-    cursor: pointer;
-  }
-  .hero-image img {
-    width: 100%;
-    max-width: 480px;
-    border-radius: 28px;
-    box-shadow: var(--shadow-md);
-    border: 1px solid var(--border-color);
-    object-fit: cover;
-  }
+        .input-group input:focus {
+            border-color: #00e0ff;
+            box-shadow: 0 0 12px rgba(0,224,255,0.3);
+        }
 
-  /* Stats row */
-  .stats-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: 20px;
-    margin-bottom: 48px;
-  }
-  .stat-card {
-    background: var(--stat-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 24px;
-    padding: 20px;
-    text-align: center;
-    transition: 0.2s;
-  }
-  .stat-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-4px);
-  }
-  .stat-value {
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: var(--accent);
-  }
-  .stat-label {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-  }
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            border: none;
+            border-radius: 40px;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 8px;
+        }
 
-  .section-title {
-    font-size: 1.65rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-    border-right: 4px solid var(--accent);
-    padding-right: 16px;
-  }
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(0,114,255,0.4);
+        }
 
-  /* Actions grid */
-  .actions {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 24px;
-    margin-bottom: 48px;
-  }
-  .action-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    padding: 24px;
-    border-radius: 24px;
-    transition: 0.25s;
-  }
-  .action-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-5px);
-  }
-  .action-card h3 {
-    margin-bottom: 12px;
-    font-size: 1.25rem;
-  }
-  .action-card p {
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    margin-bottom: 20px;
-  }
-  .action-card button {
-    width: 100%;
-    background: var(--surface-card);
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    padding: 10px;
-    border-radius: 40px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: 0.2s;
-  }
-  .action-card button:hover {
-    background: var(--accent);
-    color: white;
-  }
+        .btn-google {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 40px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
 
-  /* Info grid */
-  .info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-    margin-top: 12px;
-  }
-  .info-box {
-    background: var(--card-bg);
-    border-radius: 24px;
-    padding: 26px;
-    border: 1px solid var(--border-color);
-  }
+        .btn-google:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.02);
+        }
 
-  /* Loading overlay */
-  .loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(4px);
-    z-index: 2000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 16px;
-    color: white;
-    font-size: 1.2rem;
-  }
-  .spinner {
-    width: 50px;
-    height: 50px;
-    border: 5px solid rgba(255,255,255,0.3);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
+        .error-message {
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid #e74c3c;
+            color: #e74c3c;
+            padding: 10px;
+            border-radius: 28px;
+            text-align: center;
+            margin: 16px 0;
+            font-size: 0.85rem;
+        }
 
-  @media (max-width: 900px) {
-    .hero { flex-direction: column; text-align: center; padding: 32px; }
-    .hero-text h1 { font-size: 1.9rem; }
-  }
-  @media (max-width: 800px) {
-    .sidebar { transform: translateX(100%); width: 280px; }
-    .sidebar.show { transform: translateX(0); }
-    .main { margin-right: 0 !important; padding: 24px 20px; }
-    .stat-value { font-size: 1.8rem; }
-  }
-  @media (max-width: 550px) {
-    .hero-text h1 { font-size: 1.6rem; }
-    .topbar { padding: 0 16px; }
-  }
-</style>
+        .links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 24px;
+        }
+
+        .links a {
+            color: #00e0ff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        /* القسم الترويجي */
+        .promo-side {
+            flex: 1;
+            background: linear-gradient(145deg, #0f1435, #090c22);
+            padding: 48px 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .promo-side h2 {
+            font-size: 2rem;
+            margin-bottom: 24px;
+            color: white;
+        }
+
+        .promo-side ul {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .promo-side li {
+            margin: 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #cbd5e1;
+        }
+
+        .promo-side li i {
+            color: #00e0ff;
+            width: 24px;
+        }
+
+        .stat-badge {
+            background: rgba(0,224,255,0.1);
+            border-radius: 24px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(0,224,255,0.3);
+        }
+
+        .stat-badge .number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #00e0ff;
+        }
+
+        @media (max-width: 900px) {
+            .promo-side { display: none; }
+            .login-wrapper { max-width: 500px; }
+        }
+    </style>
 </head>
-<body class="dark">
+<body>
+<div class="bg-animation"></div>
 
-<div class="loading-overlay" id="loadingOverlay">
-  <div class="spinner"></div>
-  <div>جاري تحميل بياناتك...</div>
+<div class="login-wrapper">
+    <div class="login-form">
+        <div class="logo-area">
+            <h1><i class="fas fa-chart-line"></i> Traders<span style="color:#00e0ff;">Fund</span></h1>
+            <p>منصة التمويل الأولى للمتداولين المحترفين</p>
+        </div>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" placeholder="كلمة المرور" required>
+            </div>
+            <button type="submit" class="btn-primary" id="loginBtn">دخول</button>
+        </form>
+
+        <button class="btn-google" id="googleLoginBtn">
+            <i class="fab fa-google"></i> تسجيل الدخول عبر Google
+        </button>
+
+        <div id="errorMessage" class="error-message"></div>
+
+        <div class="links">
+            <a href="forgot-password.html">نسيت كلمة المرور؟</a>
+            <a href="register.html">إنشاء حساب جديد</a>
+        </div>
+    </div>
+
+    <div class="promo-side">
+        <h2>تمويل يصل إلى <span style="color:#00e0ff;">$200,000</span></h2>
+        <ul>
+            <li><i class="fas fa-check-circle"></i> تقييم احترافي بشفافية</li>
+            <li><i class="fas fa-check-circle"></i> سحوبات فورية خلال 24 ساعة</li>
+            <li><i class="fas fa-check-circle"></i> دعم فني على مدار الساعة</li>
+            <li><i class="fas fa-check-circle"></i> رافعة مالية تصل 1:100</li>
+        </ul>
+        <div class="stat-badge">
+            <div class="number">+10,000</div>
+            <div>متداول مموّل</div>
+        </div>
+    </div>
 </div>
 
-<header class="topbar">
-  <div class="top-right">
-    <button class="menu-btn" id="menuToggleBtn" aria-label="القائمة"><i class="fas fa-bars"></i></button>
-    <div class="logo"><i class="fas fa-bolt"></i> FundingPro</div>
-  </div>
-  <div class="top-left">
-    <button class="theme-toggle-btn" id="themeToggleBtn"><i class="fas fa-moon"></i> <span id="themeText">داكن</span></button>
-    <button class="lang-btn" id="langSwitchBtn"><i class="fas fa-globe"></i> <span id="langText">AR | EN</span></button>
-    <button class="profile-btn" id="logoutBtn" style="background:#e74c3c20; border-color:#e74c3c; color:#e74c3c;"><i class="fas fa-sign-out-alt"></i> <span id="logoutLabel">تسجيل خروج</span></button>
-  </div>
-</header>
-
-<aside class="sidebar" id="sidebar">
-  <nav id="sidebarNav">
-    <a href="#" data-key="home" class="active"><i class="fas fa-home"></i> <span data-i18n="home">الرئيسية</span></a>
-    <a href="#" data-key="challenges"><i class="fas fa-chart-line"></i> <span data-i18n="challenges">شراء التحديات</span></a>
-    <a href="#" data-key="accounts"><i class="fas fa-wallet"></i> <span data-i18n="accounts">الحسابات</span></a>
-    <a href="#" data-key="evaluation"><i class="fas fa-chart-simple"></i> <span data-i18n="evaluation">نتائج التقييم</span></a>
-    <a href="#" data-key="withdrawals"><i class="fas fa-money-bill-wave"></i> <span data-i18n="withdrawals">السحوبات</span></a>
-    <a href="#" data-key="stats"><i class="fas fa-chart-pie"></i> <span data-i18n="stats">الإحصائيات</span></a>
-    <a href="#" data-key="rules"><i class="fas fa-scale-balanced"></i> <span data-i18n="rules">قواعد التداول</span></a>
-    <a href="#" data-key="support"><i class="fas fa-headset"></i> <span data-i18n="support">الدعم الفني</span></a>
-    <a href="#" data-key="notifications"><i class="fas fa-bell"></i> <span data-i18n="notifications">الإشعارات</span></a>
-    <a href="#" data-key="settings"><i class="fas fa-sliders-h"></i> <span data-i18n="settings">الإعدادات</span></a>
-  </nav>
-</aside>
-
-<main class="main" id="mainContent">
-  <section class="hero">
-    <div class="hero-text">
-      <h1 id="heroTitle">مرحباً <span id="userNameHero">...</span>، ابدأ رحلتك نحو حساب ممول</h1>
-      <p id="heroDesc">رصيدك التجريبي: <strong id="userBalanceHero">$0</strong> | حالة التحدي: <span id="challengeStatusHero">...</span></p>
-      <div class="hero-buttons">
-        <button class="primary-btn" id="buyChallengeHero"><i class="fas fa-rocket"></i> <span data-i18n="buyNow">شراء تحدي جديد</span></button>
-        <button class="secondary-btn" id="viewPlansBtn"><i class="fas fa-eye"></i> <span data-i18n="viewPlans">مشاهدة الخطط</span></button>
-      </div>
-    </div>
-    <div class="hero-image">
-      <img src="https://images.unsplash.com/photo-1642104704074-907c0698cbd9?q=80&w=1200&auto=format&fit=crop" alt="تداول احترافي">
-    </div>
-  </section>
-
-  <div class="stats-row">
-    <div class="stat-card"><div class="stat-value" id="stat1Value">0</div><div class="stat-label" data-i18n="statActive">تحديات نشطة</div></div>
-    <div class="stat-card"><div class="stat-value" id="stat2Value">$0</div><div class="stat-label" data-i18n="statCapital">إجمالي رأس المال الممول</div></div>
-    <div class="stat-card"><div class="stat-value" id="stat3Value">0%</div><div class="stat-label" data-i18n="statSuccess">نسبة النجاح</div></div>
-    <div class="stat-card"><div class="stat-value" id="stat4Value">0</div><div class="stat-label" data-i18n="statTraders">متداول معتمد</div></div>
-  </div>
-
-  <h2 class="section-title" data-i18n="quickAccess">الوصول السريع</h2>
-  <section class="actions">
-    <div class="action-card"><h3><i class="fas fa-rocket"></i> <span data-i18n="buyChallengeTitle">شراء تحدي</span></h3><p data-i18n="buyChallengeDesc">ابدأ تقييم جديد واختر حجم الحساب المناسب لك.</p><button class="quickBuyBtn"><span data-i18n="startNow">ابدأ الآن</span></button></div>
-    <div class="action-card"><h3><i class="fas fa-book"></i> <span data-i18n="rulesTitle">شروط التداول</span></h3><p data-i18n="rulesDesc">تعرف على القواعد وحدود المخاطرة الخاصة بالتقييم.</p><button class="rulesBtn"><span data-i18n="viewRules">عرض الشروط</span></button></div>
-    <div class="action-card"><h3><i class="fas fa-user-circle"></i> <span data-i18n="profileTitle">الملف الشخصي</span></h3><p data-i18n="profileDesc">تعديل بيانات الحساب وإدارة إعداداتك الشخصية.</p><button class="profileCardBtn"><span data-i18n="openProfile">فتح الملف</span></button></div>
-    <div class="action-card"><h3><i class="fas fa-headset"></i> <span data-i18n="supportTitle">الدعم الفني</span></h3><p data-i18n="supportDesc">تواصل مع فريق الدعم لأي استفسار أو مشكلة.</p><button class="supportCardBtn"><span data-i18n="contactNow">التواصل الآن</span></button></div>
-  </section>
-
-  <section class="info-grid">
-    <div class="info-box"><h3><i class="fas fa-play-circle"></i> <span data-i18n="info1Title">ابدأ بسهولة</span></h3><p data-i18n="info1Desc">يمكنك شراء التحدي المناسب والبدء مباشرة عبر منصات تداول احترافية مع نظام تقييم واضح ومرن.</p></div>
-    <div class="info-box"><h3><i class="fas fa-chart-line"></i> <span data-i18n="info2Title">إدارة احترافية</span></h3><p data-i18n="info2Desc">تابع حساباتك، نتائجك، وإحصائيات الأداء من خلال لوحة تحكم بسيطة وسريعة.</p></div>
-    <div class="info-box"><h3><i class="fas fa-shield-alt"></i> <span data-i18n="info3Title">بيئة موثوقة</span></h3><p data-i18n="info3Desc">تم تصميم النظام لتوفير تجربة مستقرة وآمنة للمتداولين الجدد والمحترفين.</p></div>
-  </section>
-</main>
-
 <script type="module">
-  // Firebase Imports
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-  import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyANR5zRHfDn5j8u8uQUj5fg9dPRmn_ZlyI",
-    authDomain: "tradingfinanceapp-9e2e2.firebaseapp.com",
-    projectId: "tradingfinanceapp-9e2e2",
-    storageBucket: "tradingfinanceapp-9e2e2.firebasestorage.app",
-    messagingSenderId: "395030573606",
-    appId: "1:395030573606:web:d226e06ed382eb723f6ce7",
-    measurementId: "G-M8MR66T1RG"
-  };
+    // إعدادات المشروع (نفس المستخدم في dashboard)
+    const firebaseConfig = {
+        apiKey: "AIzaSyANR5zRHfDn5j8u8uQUj5fg9dPRmn_ZlyI",
+        authDomain: "tradingfinanceapp-9e2e2.firebaseapp.com",
+        projectId: "tradingfinanceapp-9e2e2",
+        storageBucket: "tradingfinanceapp-9e2e2.firebasestorage.app",
+        messagingSenderId: "395030573606",
+        appId: "1:395030573606:web:d226e06ed382eb723f6ce7",
+        measurementId: "G-M8MR66T1RG"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const googleProvider = new GoogleAuthProvider();
 
-  // DOM Elements
-  const loadingOverlay = document.getElementById('loadingOverlay');
-  const userNameHero = document.getElementById('userNameHero');
-  const userBalanceHero = document.getElementById('userBalanceHero');
-  const challengeStatusHero = document.getElementById('challengeStatusHero');
-  const stat1Value = document.getElementById('stat1Value');
-  const stat2Value = document.getElementById('stat2Value');
-  const stat3Value = document.getElementById('stat3Value');
-  const stat4Value = document.getElementById('stat4Value');
+    const loginForm = document.getElementById('loginForm');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const errorDiv = document.getElementById('errorMessage');
+    const loginBtn = document.getElementById('loginBtn');
+    const googleBtn = document.getElementById('googleLoginBtn');
 
-  // Helper: إظهار/إخفاء التحميل
-  function showLoading(show) {
-    loadingOverlay.style.display = show ? 'flex' : 'none';
-  }
+    // تسجيل الدخول بالبريد وكلمة المرور
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+        errorDiv.innerText = "";
 
-  // Load user data from Firestore and update UI
-  async function loadUserData(user) {
-    if (!user) return;
-    showLoading(true);
-    try {
-      const userDocRef = doc(db, "users", user.uid);
-      const docSnap = await getDoc(userDocRef);
-      let userData = {};
-      if (docSnap.exists()) {
-        userData = docSnap.data();
-      } else {
-        // If no document exists, create default (but we don't write automatically to avoid overwriting)
-        userData = { 
-          fullName: user.displayName || user.email?.split('@')[0] || "متداول", 
-          virtualBalance: 100000, 
-          tradingChallenge: "not_started" 
-        };
-      }
-      const displayName = userData.fullName || user.email?.split('@')[0] || "متداول";
-      userNameHero.innerText = displayName;
-      const balance = userData.virtualBalance || 100000;
-      userBalanceHero.innerText = `$${balance.toLocaleString()}`;
-      const challenge = userData.tradingChallenge || "not_started";
-      challengeStatusHero.innerText = challenge === "started" ? "جاري التحدي" : "غير مفعل";
-      
-      // Update stats
-      stat1Value.innerText = "1"; // يمكن جعلها ديناميكية لاحقًا
-      stat2Value.innerText = `$${balance.toLocaleString()}`;
-      stat3Value.innerText = "74%";
-      stat4Value.innerText = "1,240";
-    } catch (error) {
-      console.error("Error loading user data:", error);
-      alert("حدث خطأ في تحميل البيانات. تأكد من اتصال الإنترنت.");
-    } finally {
-      showLoading(false);
-    }
-  }
+        if (!email || !password) {
+            errorDiv.innerText = "❌ الرجاء إدخال البريد الإلكتروني وكلمة المرور";
+            return;
+        }
 
-  // Monitor auth state
-  onAuthStateChanged(auth, async (user) => {
-    if (!user) {
-      window.location.href = "index.html";
-    } else {
-      await loadUserData(user);
-    }
-  });
+        loginBtn.disabled = true;
+        loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الدخول...';
 
-  // Logout
-  document.getElementById('logoutBtn').addEventListener('click', async () => {
-    await signOut(auth);
-    window.location.href = "index.html";
-  });
-
-  // -------------------- UI: Language, Theme, Sidebar, Actions --------------------
-  // Translations
-  const translations = {
-    ar: {
-      home: "الرئيسية", challenges: "شراء التحديات", accounts: "الحسابات", evaluation: "نتائج التقييم", withdrawals: "السحوبات",
-      stats: "الإحصائيات", rules: "قواعد التداول", support: "الدعم الفني", notifications: "الإشعارات", settings: "الإعدادات",
-      buyNow: "🚀 شراء تحدي جديد", viewPlans: "📋 مشاهدة الخطط",
-      statActive: "تحديات نشطة", statCapital: "إجمالي رأس المال الممول", statSuccess: "نسبة النجاح", statTraders: "متداول معتمد",
-      quickAccess: "الوصول السريع", buyChallengeTitle: "شراء تحدي", buyChallengeDesc: "ابدأ تقييم جديد واختر حجم الحساب المناسب لك.",
-      startNow: "ابدأ الآن", rulesTitle: "شروط التداول", rulesDesc: "تعرف على القواعد وحدود المخاطرة الخاصة بالتقييم.",
-      viewRules: "عرض الشروط", profileTitle: "الملف الشخصي", profileDesc: "تعديل بيانات الحساب وإدارة إعداداتك الشخصية.",
-      openProfile: "فتح الملف", supportTitle: "الدعم الفني", supportDesc: "تواصل مع فريق الدعم لأي استفسار أو مشكلة.",
-      contactNow: "التواصل الآن", info1Title: "ابدأ بسهولة", info1Desc: "يمكنك شراء التحدي المناسب والبدء مباشرة عبر منصات تداول احترافية مع نظام تقييم واضح ومرن.",
-      info2Title: "إدارة احترافية", info2Desc: "تابع حساباتك، نتائجك، وإحصائيات الأداء من خلال لوحة تحكم بسيطة وسريعة.",
-      info3Title: "بيئة موثوقة", info3Desc: "تم تصميم النظام لتوفير تجربة مستقرة وآمنة للمتداولين الجدد والمحترفين.",
-      logoutLabel: "تسجيل خروج", demoMsg: "📢 تم فتح: {section}"
-    },
-    en: {
-      home: "Home", challenges: "Buy Challenges", accounts: "Accounts", evaluation: "Evaluation Results", withdrawals: "Withdrawals",
-      stats: "Statistics", rules: "Trading Rules", support: "Support", notifications: "Notifications", settings: "Settings",
-      buyNow: "🚀 Buy New Challenge", viewPlans: "📋 View Plans",
-      statActive: "Active Challenges", statCapital: "Total Funded Capital", statSuccess: "Success Rate", statTraders: "Verified Traders",
-      quickAccess: "Quick Access", buyChallengeTitle: "Buy Challenge", buyChallengeDesc: "Start a new evaluation and choose your account size.",
-      startNow: "Start Now", rulesTitle: "Trading Rules", rulesDesc: "Learn the rules and risk limits of the evaluation.",
-      viewRules: "View Rules", profileTitle: "Profile", profileDesc: "Edit your account data and personal settings.",
-      openProfile: "Open Profile", supportTitle: "Support", supportDesc: "Contact support team for any inquiry.",
-      contactNow: "Contact Now", info1Title: "Easy Start", info1Desc: "Buy the suitable challenge and start trading on pro platforms.",
-      info2Title: "Pro Management", info2Desc: "Track accounts, results, and performance metrics easily.",
-      info3Title: "Trusted Environment", info3Desc: "Designed for stable and secure trading experience.",
-      logoutLabel: "Logout", demoMsg: "📢 Opened: {section}"
-    }
-  };
-
-  let currentLang = localStorage.getItem('dashboardLang') || 'ar';
-  let currentTheme = localStorage.getItem('dashboardTheme') || 'dark';
-
-  function applyLanguage() {
-    const t = translations[currentLang];
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      if (t[key]) el.innerText = t[key];
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            console.log("تم تسجيل الدخول:", userCredential.user.email);
+            // ✅ توجيه إلى لوحة التحكم
+            window.location.href = "dashboard.html";
+        } catch (error) {
+            let msg = "";
+            switch (error.code) {
+                case 'auth/user-not-found':
+                    msg = "❌ لا يوجد حساب بهذا البريد الإلكتروني";
+                    break;
+                case 'auth/wrong-password':
+                    msg = "❌ كلمة المرور غير صحيحة";
+                    break;
+                case 'auth/invalid-email':
+                    msg = "❌ البريد الإلكتروني غير صالح";
+                    break;
+                default:
+                    msg = "❌ خطأ: " + error.message;
+            }
+            errorDiv.innerText = msg;
+        } finally {
+            loginBtn.disabled = false;
+            loginBtn.innerHTML = 'دخول';
+        }
     });
-    document.querySelectorAll('#sidebarNav a span').forEach(span => {
-      const parent = span.closest('a');
-      if (parent) {
-        const key = parent.getAttribute('data-key');
-        if (key && t[key]) span.innerText = t[key];
-      }
+
+    // تسجيل الدخول عبر Google
+    googleBtn.addEventListener('click', async () => {
+        errorDiv.innerText = "";
+        googleBtn.disabled = true;
+        googleBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الاتصال بـ Google...';
+        try {
+            const result = await signInWithPopup(auth, googleProvider);
+            console.log("Google login success:", result.user);
+            window.location.href = "dashboard.html";
+        } catch (error) {
+            errorDiv.innerText = "❌ فشل تسجيل الدخول عبر Google: " + error.message;
+        } finally {
+            googleBtn.disabled = false;
+            googleBtn.innerHTML = '<i class="fab fa-google"></i> تسجيل الدخول عبر Google';
+        }
     });
-    document.getElementById('langText').innerHTML = currentLang === 'ar' ? 'AR | EN' : 'EN | AR';
-    document.getElementById('logoutLabel').innerText = t.logoutLabel;
-    // Update hero buttons texts manually (they don't have data-i18n)
-    document.querySelector('#buyChallengeHero span').innerText = t.buyNow;
-    document.querySelector('#viewPlansBtn span').innerText = t.viewPlans;
-    // Update action card buttons if needed
-    document.querySelectorAll('.quickBuyBtn span').forEach(el => el.innerText = t.startNow);
-    document.querySelectorAll('.rulesBtn span').forEach(el => el.innerText = t.viewRules);
-    document.querySelectorAll('.profileCardBtn span').forEach(el => el.innerText = t.openProfile);
-    document.querySelectorAll('.supportCardBtn span').forEach(el => el.innerText = t.contactNow);
-
-    if (currentLang === 'en') {
-      document.body.setAttribute('dir', 'ltr');
-    } else {
-      document.body.setAttribute('dir', 'rtl');
-    }
-    localStorage.setItem('dashboardLang', currentLang);
-  }
-
-  function setTheme(theme) {
-    currentTheme = theme;
-    if (theme === 'light') {
-      document.body.classList.remove('dark');
-      document.body.classList.add('light');
-    } else {
-      document.body.classList.remove('light');
-      document.body.classList.add('dark');
-    }
-    const themeSpan = document.getElementById('themeText');
-    if (themeSpan) themeSpan.innerText = (currentLang === 'ar' ? (theme === 'dark' ? 'داكن' : 'فاتح') : (theme === 'dark' ? 'Dark' : 'Light'));
-    localStorage.setItem('dashboardTheme', theme);
-  }
-
-  function toggleTheme() { setTheme(currentTheme === 'dark' ? 'light' : 'dark'); }
-  function showDemoMessage(sectionKey) { alert(translations[currentLang].demoMsg.replace('{section}', sectionKey)); }
-
-  // Sidebar logic
-  const sidebar = document.getElementById('sidebar');
-  const mainArea = document.getElementById('mainContent');
-  const menuBtn = document.getElementById('menuToggleBtn');
-  function toggleSidebar() {
-    if (window.innerWidth <= 800) sidebar.classList.toggle('show');
-    else { sidebar.classList.toggle('hide'); mainArea.classList.toggle('full'); }
-  }
-  function closeSidebarMobile() { if (window.innerWidth <= 800) sidebar.classList.remove('show'); }
-  function handleResize() {
-    if (window.innerWidth <= 800) {
-      if (sidebar.classList.contains('hide')) sidebar.classList.remove('hide');
-      mainArea.classList.remove('full');
-    } else {
-      if (sidebar.classList.contains('show')) sidebar.classList.remove('show');
-      if (sidebar.classList.contains('hide')) mainArea.classList.add('full');
-      else mainArea.classList.remove('full');
-    }
-  }
-  function setActiveLink(el) {
-    document.querySelectorAll('#sidebarNav a').forEach(link => link.classList.remove('active'));
-    el.classList.add('active');
-    const key = el.getAttribute('data-key');
-    const t = translations[currentLang];
-    const sectionName = t[key] || key;
-    showDemoMessage(sectionName);
-    closeSidebarMobile();
-  }
-
-  // Event listeners
-  document.getElementById('langSwitchBtn').addEventListener('click', () => {
-    currentLang = currentLang === 'ar' ? 'en' : 'ar';
-    applyLanguage();
-    setTheme(currentTheme);
-    showDemoMessage(currentLang === 'ar' ? "تبديل اللغة إلى العربية" : "Language switched to English");
-  });
-  document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);
-  document.getElementById('buyChallengeHero').addEventListener('click', () => showDemoMessage(translations[currentLang].buyChallengeTitle));
-  document.getElementById('viewPlansBtn').addEventListener('click', () => showDemoMessage(translations[currentLang].viewPlans));
-  document.querySelectorAll('.quickBuyBtn').forEach(btn => btn.addEventListener('click', () => showDemoMessage(translations[currentLang].buyChallengeTitle)));
-  document.querySelectorAll('.rulesBtn').forEach(btn => btn.addEventListener('click', () => showDemoMessage(translations[currentLang].rulesTitle)));
-  document.querySelectorAll('.profileCardBtn').forEach(btn => btn.addEventListener('click', () => showDemoMessage(translations[currentLang].profileTitle)));
-  document.querySelectorAll('.supportCardBtn').forEach(btn => btn.addEventListener('click', () => showDemoMessage(translations[currentLang].supportTitle)));
-  document.querySelectorAll('#sidebarNav a').forEach(link => link.addEventListener('click', (e) => { e.preventDefault(); setActiveLink(link); }));
-  menuBtn.addEventListener('click', toggleSidebar);
-  window.addEventListener('resize', handleResize);
-  mainArea.addEventListener('click', (e) => { if (window.innerWidth <= 800 && sidebar.classList.contains('show') && !sidebar.contains(e.target) && e.target !== menuBtn) sidebar.classList.remove('show'); });
-
-  // Initialization
-  applyLanguage();
-  setTheme(currentTheme);
-  handleResize();
-  // Ensure home link is active
-  const homeLink = document.querySelector('#sidebarNav a[data-key="home"]');
-  if (homeLink && !homeLink.classList.contains('active')) homeLink.classList.add('active');
 </script>
 </body>
 </html>
