@@ -102,6 +102,12 @@
     box-shadow: var(--shadow-sm);
   }
 
+  .top-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
   .logo {
     font-size: 1.65rem;
     font-weight: 800;
@@ -134,7 +140,7 @@
     transform: translateY(-1px);
   }
 
-  /* Sidebar */
+  /* Sidebar - اصلاح المشكلة */
   .sidebar {
     width: 280px;
     background: var(--sidebar-bg);
@@ -149,12 +155,44 @@
     z-index: 1050;
   }
 
-  .sidebar:not(.hide) {
+  /* Desktop mode - sidebar visible by default */
+  .sidebar {
     transform: translateX(0);
   }
+  
+  /* Desktop mode - hidden with .hide class */
   .sidebar.hide {
     transform: translateX(100%);
   }
+  
+  /* Mobile mode - hidden by default, show with .show class */
+  @media (max-width: 800px) {
+    .sidebar {
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+    .sidebar.show {
+      transform: translateX(0);
+    }
+    /* إضافة خلفية مظلمة عند فتح القائمة في الموبايل */
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1040;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease;
+    }
+    .sidebar-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
   .sidebar nav {
     display: flex;
     flex-direction: column;
@@ -192,6 +230,16 @@
   }
   .main.full {
     margin-right: 0;
+  }
+
+  @media (max-width: 800px) {
+    .main {
+      margin-right: 0 !important;
+      padding: 24px 20px;
+    }
+    .main.full {
+      margin-right: 0;
+    }
   }
 
   /* Hero section */
@@ -380,15 +428,15 @@
     .hero { flex-direction: column; text-align: center; padding: 32px; }
     .hero-text h1 { font-size: 1.9rem; }
   }
-  @media (max-width: 800px) {
-    .sidebar { transform: translateX(100%); width: 280px; }
-    .sidebar.show { transform: translateX(0); }
-    .main { margin-right: 0 !important; padding: 24px 20px; }
-    .stat-value { font-size: 1.8rem; }
-  }
   @media (max-width: 550px) {
     .hero-text h1 { font-size: 1.6rem; }
     .topbar { padding: 0 16px; }
+    .lang-btn span, .theme-toggle-btn span {
+      display: none;
+    }
+    .lang-btn, .theme-toggle-btn {
+      padding: 8px 12px;
+    }
   }
 </style>
 </head>
@@ -410,6 +458,9 @@
     <button class="profile-btn" id="logoutBtn" style="background:#e74c3c20; border-color:#e74c3c; color:#e74c3c;"><i class="fas fa-sign-out-alt"></i> <span id="logoutLabel">تسجيل خروج</span></button>
   </div>
 </header>
+
+<!-- إضافة overlay للهاتف -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 <aside class="sidebar" id="sidebar">
   <nav id="sidebarNav">
@@ -509,7 +560,6 @@
       if (docSnap.exists()) {
         userData = docSnap.data();
       } else {
-        // If no document exists, create default (but we don't write automatically to avoid overwriting)
         userData = { 
           fullName: user.displayName || user.email?.split('@')[0] || "متداول", 
           virtualBalance: 100000, 
@@ -524,7 +574,7 @@
       challengeStatusHero.innerText = challenge === "started" ? "جاري التحدي" : "غير مفعل";
       
       // Update stats
-      stat1Value.innerText = "1"; // يمكن جعلها ديناميكية لاحقًا
+      stat1Value.innerText = "1";
       stat2Value.innerText = `$${balance.toLocaleString()}`;
       stat3Value.innerText = "74%";
       stat4Value.innerText = "1,240";
@@ -602,7 +652,7 @@
     });
     document.getElementById('langText').innerHTML = currentLang === 'ar' ? 'AR | EN' : 'EN | AR';
     document.getElementById('logoutLabel').innerText = t.logoutLabel;
-    // Update hero buttons texts manually (they don't have data-i18n)
+    // Update hero buttons texts manually
     document.querySelector('#buyChallengeHero span').innerText = t.buyNow;
     document.querySelector('#viewPlansBtn span').innerText = t.viewPlans;
     // Update action card buttons if needed
@@ -636,25 +686,79 @@
   function toggleTheme() { setTheme(currentTheme === 'dark' ? 'light' : 'dark'); }
   function showDemoMessage(sectionKey) { alert(translations[currentLang].demoMsg.replace('{section}', sectionKey)); }
 
-  // Sidebar logic
+  // ----- Sidebar logic - اصلاح المشكلة -----
   const sidebar = document.getElementById('sidebar');
   const mainArea = document.getElementById('mainContent');
   const menuBtn = document.getElementById('menuToggleBtn');
-  function toggleSidebar() {
-    if (window.innerWidth <= 800) sidebar.classList.toggle('show');
-    else { sidebar.classList.toggle('hide'); mainArea.classList.toggle('full'); }
-  }
-  function closeSidebarMobile() { if (window.innerWidth <= 800) sidebar.classList.remove('show'); }
-  function handleResize() {
+  const sidebarOverlay = document.getElementById('sidebarOverlay');
+  
+  function closeSidebar() {
     if (window.innerWidth <= 800) {
-      if (sidebar.classList.contains('hide')) sidebar.classList.remove('hide');
-      mainArea.classList.remove('full');
+      sidebar.classList.remove('show');
+      if (sidebarOverlay) sidebarOverlay.classList.remove('active');
     } else {
-      if (sidebar.classList.contains('show')) sidebar.classList.remove('show');
-      if (sidebar.classList.contains('hide')) mainArea.classList.add('full');
-      else mainArea.classList.remove('full');
+      sidebar.classList.add('hide');
+      mainArea.classList.add('full');
     }
   }
+  
+  function openSidebar() {
+    if (window.innerWidth <= 800) {
+      sidebar.classList.add('show');
+      if (sidebarOverlay) sidebarOverlay.classList.add('active');
+    } else {
+      sidebar.classList.remove('hide');
+      mainArea.classList.remove('full');
+    }
+  }
+  
+  function toggleSidebar() {
+    if (window.innerWidth <= 800) {
+      if (sidebar.classList.contains('show')) {
+        closeSidebar();
+      } else {
+        openSidebar();
+      }
+    } else {
+      if (sidebar.classList.contains('hide')) {
+        openSidebar();
+      } else {
+        closeSidebar();
+      }
+    }
+  }
+  
+  function handleResize() {
+    if (window.innerWidth <= 800) {
+      // وضع الموبايل: تأكد من أن الـ sidebar مخفي بشكل افتراضي
+      if (!sidebar.classList.contains('show')) {
+        sidebar.classList.remove('show');
+        if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+      }
+      // تأكد من إزالة كلاس hide إذا كان موجوداً
+      if (sidebar.classList.contains('hide')) {
+        sidebar.classList.remove('hide');
+      }
+      mainArea.classList.remove('full');
+    } else {
+      // وضع الكمبيوتر
+      // إزالة كلاس show إذا كان موجوداً
+      if (sidebar.classList.contains('show')) {
+        sidebar.classList.remove('show');
+        if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+      }
+      // التحقق من حالة الـ hide من localStorage
+      const sidebarHidden = localStorage.getItem('sidebarHidden') === 'true';
+      if (sidebarHidden) {
+        sidebar.classList.add('hide');
+        mainArea.classList.add('full');
+      } else {
+        sidebar.classList.remove('hide');
+        mainArea.classList.remove('full');
+      }
+    }
+  }
+  
   function setActiveLink(el) {
     document.querySelectorAll('#sidebarNav a').forEach(link => link.classList.remove('active'));
     el.classList.add('active');
@@ -662,7 +766,18 @@
     const t = translations[currentLang];
     const sectionName = t[key] || key;
     showDemoMessage(sectionName);
-    closeSidebarMobile();
+    // إغلاق القائمة في الموبايل بعد النقر على رابط
+    if (window.innerWidth <= 800) {
+      closeSidebar();
+    }
+  }
+
+  // حفظ حالة الـ sidebar في الكمبيوتر
+  function saveSidebarState() {
+    if (window.innerWidth > 800) {
+      const isHidden = sidebar.classList.contains('hide');
+      localStorage.setItem('sidebarHidden', isHidden);
+    }
   }
 
   // Event listeners
@@ -681,13 +796,33 @@
   document.querySelectorAll('.supportCardBtn').forEach(btn => btn.addEventListener('click', () => showDemoMessage(translations[currentLang].supportTitle)));
   document.querySelectorAll('#sidebarNav a').forEach(link => link.addEventListener('click', (e) => { e.preventDefault(); setActiveLink(link); }));
   menuBtn.addEventListener('click', toggleSidebar);
-  window.addEventListener('resize', handleResize);
-  mainArea.addEventListener('click', (e) => { if (window.innerWidth <= 800 && sidebar.classList.contains('show') && !sidebar.contains(e.target) && e.target !== menuBtn) sidebar.classList.remove('show'); });
+  
+  // النقر على الـ overlay لإغلاق القائمة في الموبايل
+  if (sidebarOverlay) {
+    sidebarOverlay.addEventListener('click', closeSidebar);
+  }
+  
+  window.addEventListener('resize', () => {
+    handleResize();
+    saveSidebarState();
+  });
+  
+  // النقر خارج القائمة في الموبايل
+  mainArea.addEventListener('click', (e) => {
+    if (window.innerWidth <= 800 && sidebar.classList.contains('show')) {
+      closeSidebar();
+    }
+  });
 
   // Initialization
   applyLanguage();
   setTheme(currentTheme);
   handleResize();
+  
+  // حفظ حالة الـ sidebar عند إخفائها أو إظهارها
+  const observer = new MutationObserver(saveSidebarState);
+  observer.observe(sidebar, { attributes: true, attributeFilter: ['class'] });
+  
   // Ensure home link is active
   const homeLink = document.querySelector('#sidebarNav a[data-key="home"]');
   if (homeLink && !homeLink.classList.contains('active')) homeLink.classList.add('active');
