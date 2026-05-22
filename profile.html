@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>الملف الشخصي - FundedX | منصة التداول المموَّلة</title>
+    <link rel="stylesheet" href="profile-style.css">
+    <!-- خط احترافي من Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 (مجاني للأيقونات) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="profile-page">
+        <!-- الهيدر مع الترحيب وصورة الملف الشخصي -->
+        <div class="profile-header">
+            <div class="profile-avatar-wrapper">
+                <div class="avatar-container">
+                    <img id="profileImage" src="https://ui-avatars.com/api/?background=667eea&color=fff&rounded=true&size=128&bold=true&name=User" alt="صورة الملف الشخصي">
+                    <label for="imageUpload" class="avatar-upload-btn">
+                        <i class="fas fa-camera"></i>
+                    </label>
+                    <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                </div>
+                <h2 id="userNameDisplay">مرحباً، المتداول</h2>
+                <p class="user-role">متداول مموَّل <i class="fas fa-check-circle"></i></p>
+            </div>
+        </div>
+
+        <!-- نموذج الملف الشخصي - مقسم إلى أقسام -->
+        <form id="profileForm" class="profile-form">
+            <!-- بطاقة المعلومات الشخصية -->
+            <div class="form-card">
+                <div class="card-header">
+                    <i class="fas fa-user-circle"></i>
+                    <h3>المعلومات الشخصية</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> الاسم الأول</label>
+                            <input type="text" id="firstName" placeholder="أدخل اسمك الأول">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-user-tag"></i> اللقب</label>
+                            <input type="text" id="lastName" placeholder="أدخل لقبك">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-at"></i> اسم المستخدم</label>
+                        <input type="text" id="username" placeholder="@username">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-phone-alt"></i> رقم الهاتف</label>
+                            <input type="tel" id="phone" placeholder="+1234567890">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar-alt"></i> تاريخ الميلاد</label>
+                            <input type="date" id="birthDate">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-map-marker-alt"></i> العنوان الكامل</label>
+                        <input type="text" id="address" placeholder="البلد، المدينة، الشارع">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-flag"></i> الدولة</label>
+                            <input type="text" id="country" placeholder="الدولة">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-city"></i> الولاية/المنطقة</label>
+                            <input type="text" id="state" placeholder="الولاية">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- بطاقة المعلومات المهنية للمتداول -->
+            <div class="form-card">
+                <div class="card-header">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>بيانات التداول المهنية</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-graduation-cap"></i> مستوى الخبرة</label>
+                            <select id="experience">
+                                <option value="">اختر المستوى</option>
+                                <option value="مبتدئ">مبتدئ</option>
+                                <option value="متوسط">متوسط</option>
+                                <option value="محترف">محترف</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-wallet"></i> نوع الحساب</label>
+                            <select id="accountType">
+                                <option value="تجريبي">حساب تجريبي</option>
+                                <option value="ممول">حساب ممول</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-coins"></i> رأس المال الأولي ($)</label>
+                            <input type="number" id="initialCapital" step="1000" placeholder="مثال: 10000">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-chart-simple"></i> الأرباح الإجمالية ($)</label>
+                            <input type="number" id="totalProfit" step="0.01" readonly placeholder="0.00">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-repeat"></i> عدد الصفقات</label>
+                            <input type="number" id="totalTrades" readonly placeholder="0">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-percent"></i> نسبة النجاح (%)</label>
+                            <input type="number" id="successRate" step="0.01" readonly placeholder="0.00">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-dollar-sign"></i> الرصيد الحالي ($)</label>
+                            <input type="number" id="currentBalance" step="0.01" readonly placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-arrow-down"></i> الخسائر القصوى ($)</label>
+                            <input type="number" id="maxDrawdown" step="0.01" placeholder="مثال: 5000">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- أزرار الإجراءات -->
+            <div class="form-actions">
+                <button type="submit" class="btn-save">
+                    <i class="fas fa-save"></i> حفظ التغييرات
+                </button>
+                <div id="message" class="message"></div>
+            </div>
+        </form>
+    </div>
+
+    <script type="module" src="profile-script.js"></script>
+</body>
+</html>
