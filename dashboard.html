@@ -659,11 +659,12 @@
     document.querySelector('#buyChallengeHero span').innerText = t.buyNow;
     document.querySelector('#viewPlansBtn span').innerText = t.viewPlans;
     // Update action card buttons if needed
-    document.querySelectorAll('.quickBuyBtn span').forEach(el => el.innerText = t.startNow);
-    document.querySelectorAll('.rulesBtn span').forEach(el => el.innerText = t.viewRules);
-    document.querySelectorAll('.profileCardBtn span').forEach(el => el.innerText = t.openProfile);
-    document.querySelectorAll('.supportCardBtn span').forEach(el => el.innerText = t.contactNow);
-
+   document.querySelectorAll('.quickBuyBtn').forEach(btn => btn.addEventListener('click', () => showDemoMessage(translations[currentLang].buyChallengeTitle)));
+document.querySelectorAll('.rulesBtn').forEach(btn => btn.addEventListener('click', () => showDemoMessage(translations[currentLang].rulesTitle)));
+document.querySelectorAll('.profileCardBtn').forEach(btn => btn.addEventListener('click', () => {
+    window.location.href = 'profile.html';
+}));
+document.querySelectorAll('.supportCardBtn').forEach(btn => btn.addEventListener('click', () => showDemoMessage(translations[currentLang].supportTitle)));
     if (currentLang === 'en') {
       document.body.setAttribute('dir', 'ltr');
     } else {
