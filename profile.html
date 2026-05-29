@@ -2,80 +2,40 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>الملف الشخصي - FundedX</title>
-  <!-- Google Fonts + Font Awesome -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(145deg, #f0f4ff 0%, #e9eefa 100%);
+      background: linear-gradient(145deg, #f0f4ff, #e9eefa);
       min-height: 100vh;
       padding: 1.5rem;
     }
-
-    /* الحاوية الرئيسية */
     .profile-container {
       max-width: 1000px;
       margin: 0 auto;
-      background: #ffffff;
+      background: white;
       border-radius: 2rem;
-      box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 20px 35px -10px rgba(0,0,0,0.1);
       overflow: hidden;
-      animation: fadeIn 0.4s ease;
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* رأس الصفحة (بدون صورة) */
     .profile-header {
       background: linear-gradient(135deg, #1e2a3a, #0f172a);
-      padding: 2rem 1.5rem;
+      padding: 2rem;
       text-align: center;
       color: white;
     }
-
-    .profile-header h1 {
-      font-size: 1.9rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-
-    .profile-header p {
-      opacity: 0.8;
-      font-size: 0.95rem;
-    }
-
-    /* نموذج البطاقات */
-    .profile-form {
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.8rem;
-    }
-
+    .profile-header h1 { font-size: 1.9rem; margin-bottom: 0.5rem; }
+    .profile-form { padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
     .form-card {
-      background: #ffffff;
+      background: white;
       border-radius: 1.5rem;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
       border: 1px solid #eef2f6;
-      transition: box-shadow 0.2s;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.02);
     }
-
-    .form-card:hover {
-      box-shadow: 0 12px 25px -8px rgba(0, 0, 0, 0.08);
-    }
-
     .card-header {
       padding: 1rem 1.5rem;
       border-bottom: 1px solid #edf2f7;
@@ -83,35 +43,11 @@
       align-items: center;
       gap: 0.75rem;
     }
-
-    .card-header i {
-      font-size: 1.5rem;
-      color: #2563eb;
-    }
-
-    .card-header h3 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #0f172a;
-    }
-
-    .card-body {
-      padding: 1.5rem;
-    }
-
-    /* تنسيق الصفوف والحقول */
-    .form-row {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1.2rem;
-      flex-wrap: wrap;
-    }
-
-    .form-group {
-      flex: 1;
-      min-width: 180px;
-    }
-
+    .card-header i { font-size: 1.5rem; color: #2563eb; }
+    .card-header h3 { font-size: 1.25rem; font-weight: 600; }
+    .card-body { padding: 1.5rem; }
+    .form-row { display: flex; gap: 1rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
+    .form-group { flex: 1; min-width: 180px; }
     .form-group label {
       display: flex;
       align-items: center;
@@ -121,79 +57,33 @@
       color: #334155;
       margin-bottom: 0.4rem;
     }
-
-    .form-group label i {
-      color: #3b82f6;
-      width: 1.2rem;
-    }
-
-    /* حقل الهاتف مع الرمز */
-    .phone-wrapper {
-      display: flex;
-      gap: 0.6rem;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .country-code {
-      width: 110px;
-      padding: 0.75rem 0.5rem;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 0.75rem;
-      background: #fafcff;
-      font-family: inherit;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: 0.2s;
-    }
-
-    .country-code:focus {
-      outline: none;
-      border-color: #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
-    }
-
-    .phone-number {
-      flex: 1;
-      padding: 0.75rem 1rem;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 0.75rem;
-      font-size: 0.95rem;
-      font-family: inherit;
-      background: #fafcff;
-      transition: 0.2s;
-    }
-
-    .phone-number:focus {
-      outline: none;
-      border-color: #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
-    }
-
+    .form-group label i { color: #3b82f6; }
     input, select {
       width: 100%;
       padding: 0.75rem 1rem;
       border: 1.5px solid #e2e8f0;
       border-radius: 0.75rem;
-      font-size: 0.95rem;
       font-family: inherit;
       background: #fafcff;
       transition: 0.2s;
     }
-
     input:focus, select:focus {
       outline: none;
       border-color: #3b82f6;
       box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
-      background: white;
     }
-
-    input[readonly] {
-      background-color: #f8fafc;
-      cursor: default;
-      color: #475569;
+    .phone-wrapper {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
     }
-
+    .country-code {
+      width: 110px;
+      padding: 0.75rem 0.5rem;
+    }
+    .phone-number {
+      flex: 1;
+    }
     .btn-save {
       background: linear-gradient(95deg, #2563eb, #1e40af);
       border: none;
@@ -207,41 +97,18 @@
       align-items: center;
       gap: 0.6rem;
       transition: 0.25s;
-      box-shadow: 0 5px 12px rgba(37,99,235,0.25);
     }
-
-    .btn-save:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 20px -8px rgba(37,99,235,0.4);
-    }
-
-    .form-actions {
-      text-align: center;
-      padding-top: 0.5rem;
-    }
-
+    .btn-save:hover { transform: translateY(-2px); }
+    .form-actions { text-align: center; }
     .message {
       margin-top: 1rem;
       padding: 0.8rem;
       border-radius: 1rem;
       font-weight: 500;
-      font-size: 0.9rem;
       text-align: center;
     }
-
-    .message.success {
-      background: #dcfce7;
-      color: #166534;
-      border: 1px solid #bbf7d0;
-    }
-
-    .message.error {
-      background: #fee2e2;
-      color: #991b1b;
-      border: 1px solid #fecaca;
-    }
-
-    /* روابط العودة */
+    .message.success { background: #dcfce7; color: #166534; }
+    .message.error { background: #fee2e2; color: #991b1b; }
     .back-link {
       display: inline-flex;
       align-items: center;
@@ -251,62 +118,35 @@
       padding: 0.6rem 1.5rem;
       border-radius: 2rem;
       text-decoration: none;
-      font-weight: 500;
       font-size: 0.85rem;
       margin: 1rem 2rem 0 2rem;
-      transition: 0.2s;
     }
-
-    .back-link:hover {
-      background: #e2e8f0;
-    }
-
     @media (max-width: 700px) {
-      body { padding: 1rem; }
       .profile-form { padding: 1.2rem; }
-      .card-body { padding: 1rem; }
       .form-row { flex-direction: column; gap: 0.8rem; }
-      .profile-header h1 { font-size: 1.5rem; }
     }
   </style>
 </head>
 <body>
 
 <div class="profile-container">
-  <!-- رأس ترحيبي باسم المستخدم من Firebase Auth -->
   <div class="profile-header">
     <h1 id="greetingName">مرحباً، المتداول</h1>
     <p>إدارة ملفك الشخصي وبيانات التداول</p>
   </div>
-
-  <!-- رابط العودة إلى لوحة التحكم (dashboard) -->
   <div style="padding: 0 2rem; text-align: left;">
     <a href="dashboard.html" class="back-link"><i class="fas fa-arrow-right"></i> العودة إلى لوحة التحكم</a>
   </div>
 
   <form id="profileForm" class="profile-form">
-    <!-- بطاقة المعلومات الشخصية -->
     <div class="form-card">
-      <div class="card-header">
-        <i class="fas fa-user-circle"></i>
-        <h3>المعلومات الشخصية</h3>
-      </div>
+      <div class="card-header"><i class="fas fa-user-circle"></i><h3>المعلومات الشخصية</h3></div>
       <div class="card-body">
         <div class="form-row">
-          <div class="form-group">
-            <label><i class="fas fa-user"></i> الاسم الأول</label>
-            <input type="text" id="firstName" placeholder="أدخل اسمك الأول">
-          </div>
-          <div class="form-group">
-            <label><i class="fas fa-user-tag"></i> اللقب</label>
-            <input type="text" id="lastName" placeholder="أدخل لقبك">
-          </div>
+          <div class="form-group"><label><i class="fas fa-user"></i> الاسم الأول</label><input type="text" id="firstName" placeholder="أدخل اسمك الأول"></div>
+          <div class="form-group"><label><i class="fas fa-user-tag"></i> اللقب</label><input type="text" id="lastName" placeholder="أدخل لقبك"></div>
         </div>
-        <div class="form-group">
-          <label><i class="fas fa-at"></i> اسم المستخدم (للظهور)</label>
-          <input type="text" id="username" placeholder="@username">
-        </div>
-        <!-- حقل الهاتف مع رمز البلد -->
+        <div class="form-group"><label><i class="fas fa-at"></i> اسم المستخدم</label><input type="text" id="username" placeholder="@username"></div>
         <div class="form-group">
           <label><i class="fas fa-phone-alt"></i> رقم الهاتف</label>
           <div class="phone-wrapper">
@@ -326,56 +166,23 @@
           </div>
         </div>
         <div class="form-row">
-          <div class="form-group">
-            <label><i class="fas fa-flag"></i> الدولة</label>
-            <input type="text" id="country" placeholder="الدولة">
-          </div>
-          <div class="form-group">
-            <label><i class="fas fa-city"></i> الولاية/المدينة</label>
-            <input type="text" id="state" placeholder="الولاية أو المدينة">
-          </div>
+          <div class="form-group"><label><i class="fas fa-flag"></i> الدولة</label><input type="text" id="country" placeholder="الدولة"></div>
+          <div class="form-group"><label><i class="fas fa-city"></i> الولاية/المدينة</label><input type="text" id="state" placeholder="الولاية أو المدينة"></div>
         </div>
-        <div class="form-group">
-          <label><i class="fas fa-map-marker-alt"></i> العنوان التفصيلي</label>
-          <input type="text" id="address" placeholder="العنوان الكامل">
-        </div>
+        <div class="form-group"><label><i class="fas fa-map-marker-alt"></i> العنوان التفصيلي</label><input type="text" id="address" placeholder="العنوان الكامل"></div>
       </div>
     </div>
 
-    <!-- بطاقة المعلومات المهنية (للتداول) -->
     <div class="form-card">
-      <div class="card-header">
-        <i class="fas fa-chart-line"></i>
-        <h3>بيانات التداول</h3>
-      </div>
+      <div class="card-header"><i class="fas fa-chart-line"></i><h3>بيانات التداول</h3></div>
       <div class="card-body">
         <div class="form-row">
-          <div class="form-group">
-            <label><i class="fas fa-graduation-cap"></i> مستوى الخبرة</label>
-            <select id="experience">
-              <option value="">اختر المستوى</option>
-              <option value="مبتدئ">مبتدئ</option>
-              <option value="متوسط">متوسط</option>
-              <option value="محترف">محترف</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label><i class="fas fa-wallet"></i> نوع الحساب</label>
-            <select id="accountType">
-              <option value="تجريبي">حساب تجريبي</option>
-              <option value="ممول">حساب ممول</option>
-            </select>
-          </div>
+          <div class="form-group"><label><i class="fas fa-graduation-cap"></i> مستوى الخبرة</label><select id="experience"><option value="">اختر المستوى</option><option value="مبتدئ">مبتدئ</option><option value="متوسط">متوسط</option><option value="محترف">محترف</option></select></div>
+          <div class="form-group"><label><i class="fas fa-wallet"></i> نوع الحساب</label><select id="accountType"><option value="تجريبي">حساب تجريبي</option><option value="ممول">حساب ممول</option></select></div>
         </div>
         <div class="form-row">
-          <div class="form-group">
-            <label><i class="fas fa-coins"></i> رأس المال الأولي ($)</label>
-            <input type="number" id="initialCapital" step="1000" placeholder="مثال: 10000">
-          </div>
-          <div class="form-group">
-            <label><i class="fas fa-chart-simple"></i> الخسائر القصوى ($)</label>
-            <input type="number" id="maxDrawdown" step="100" placeholder="مثال: 3000">
-          </div>
+          <div class="form-group"><label><i class="fas fa-coins"></i> رأس المال الأولي ($)</label><input type="number" id="initialCapital" step="1000" placeholder="مثال: 10000"></div>
+          <div class="form-group"><label><i class="fas fa-chart-simple"></i> الخسائر القصوى ($)</label><input type="number" id="maxDrawdown" step="100" placeholder="مثال: 3000"></div>
         </div>
       </div>
     </div>
@@ -388,19 +195,20 @@
 </div>
 
 <script type="module">
-  // ------------------- Firebase Configuration -------------------
+  // ========== إعدادات Firebase ==========
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
   import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
-  // 🔥 نفس الإعدادات التي تستخدمها في dashboard و index (تأكد من صحتها)
+  // 🔥 تأكد من أن هذه البيانات صحيحة 100% (انسخها من Firebase Console)
   const firebaseConfig = {
-    apiKey: "AIzaSyDIGQ8MTdb3XzJ8w4CuktSADkLF9MUZIYI",
-    authDomain: "tradingfinanceapp.firebaseapp.com",
-    projectId: "tradingfinanceapp",
-    storageBucket: "tradingfinanceapp.firebasestorage.app",
-    messagingSenderId: "901228416943",
-    appId: "1:901228416943:web:013b973250d7b4fa4ce95a"
+        apiKey: "AIzaSyANR5zRHfDn5j8u8uQUj5fg9dPRmn_ZlyI",
+        authDomain: "tradingfinanceapp-9e2e2.firebaseapp.com",
+        projectId: "tradingfinanceapp-9e2e2",
+        storageBucket: "tradingfinanceapp-9e2e2.firebasestorage.app",
+        messagingSenderId: "395030573606",
+        appId: "1:395030573606:web:d226e06ed382eb723f6ce7",
+        measurementId: "G-M8MR66T1RG"
   };
 
   const app = initializeApp(firebaseConfig);
@@ -409,18 +217,18 @@
 
   // عناصر الصفحة
   const greetingName = document.getElementById('greetingName');
-  const firstNameInput = document.getElementById('firstName');
-  const lastNameInput = document.getElementById('lastName');
-  const usernameInput = document.getElementById('username');
-  const countryCodeSelect = document.getElementById('countryCode');
-  const phoneNumberInput = document.getElementById('phoneNumber');
-  const countryInput = document.getElementById('country');
-  const stateInput = document.getElementById('state');
-  const addressInput = document.getElementById('address');
-  const experienceSelect = document.getElementById('experience');
-  const accountTypeSelect = document.getElementById('accountType');
-  const initialCapitalInput = document.getElementById('initialCapital');
-  const maxDrawdownInput = document.getElementById('maxDrawdown');
+  const firstNameEl = document.getElementById('firstName');
+  const lastNameEl = document.getElementById('lastName');
+  const usernameEl = document.getElementById('username');
+  const countryCodeEl = document.getElementById('countryCode');
+  const phoneNumberEl = document.getElementById('phoneNumber');
+  const countryEl = document.getElementById('country');
+  const stateEl = document.getElementById('state');
+  const addressEl = document.getElementById('address');
+  const experienceEl = document.getElementById('experience');
+  const accountTypeEl = document.getElementById('accountType');
+  const initialCapitalEl = document.getElementById('initialCapital');
+  const maxDrawdownEl = document.getElementById('maxDrawdown');
   const messageDiv = document.getElementById('message');
   const profileForm = document.getElementById('profileForm');
 
@@ -432,117 +240,119 @@
     setTimeout(() => {
       messageDiv.textContent = '';
       messageDiv.className = 'message';
-    }, 3500);
+    }, 4000);
   }
 
-  // دمج رمز البلد + رقم الهاتف
+  // دالة تجميع الهاتف
   function getFullPhone() {
-    const code = countryCodeSelect.value;
-    const number = phoneNumberInput.value.trim();
+    const code = countryCodeEl.value;
+    const number = phoneNumberEl.value.trim();
     if (!number) return '';
     return `${code} ${number}`;
   }
 
-  // تفكيك الهاتف إلى رمز + رقم عند التحميل
+  // دالة تفكيك الهاتف عند التحميل
   function setPhoneFields(fullPhone) {
     if (!fullPhone) return;
     const parts = fullPhone.split(' ');
     if (parts.length >= 2) {
       const possibleCode = parts[0];
-      // التحقق من وجود الرمز في القائمة
-      let exists = false;
-      for (let i = 0; i < countryCodeSelect.options.length; i++) {
-        if (countryCodeSelect.options[i].value === possibleCode) {
-          countryCodeSelect.value = possibleCode;
-          exists = true;
+      let found = false;
+      for (let i = 0; i < countryCodeEl.options.length; i++) {
+        if (countryCodeEl.options[i].value === possibleCode) {
+          countryCodeEl.value = possibleCode;
+          found = true;
           break;
         }
       }
-      if (!exists) countryCodeSelect.value = "+213";
-      const numberPart = parts.slice(1).join(' ');
-      phoneNumberInput.value = numberPart;
+      if (!found) countryCodeEl.value = "+213";
+      phoneNumberEl.value = parts.slice(1).join(' ');
     } else {
-      phoneNumberInput.value = fullPhone;
+      phoneNumberEl.value = fullPhone;
     }
   }
 
   // حفظ البيانات في Firestore
-  async function saveProfile(userId, data) {
+  async function saveProfileData(userId, data) {
     try {
       const userRef = doc(db, 'users', userId);
       await setDoc(userRef, { ...data, updatedAt: serverTimestamp() }, { merge: true });
       showMessage('✅ تم حفظ الملف الشخصي بنجاح!', 'success');
-    } catch (err) {
-      console.error(err);
-      showMessage('❌ فشل الحفظ: ' + err.message, 'error');
+      return true;
+    } catch (error) {
+      console.error("Firestore save error:", error);
+      showMessage('❌ فشل الحفظ: ' + error.message, 'error');
+      return false;
     }
   }
 
-  // تحميل البيانات وعرضها في الحقول
-  async function loadProfile(userId) {
+  // تحميل البيانات من Firestore وملء الحقول
+  async function loadProfileData(userId) {
     try {
       const userRef = doc(db, 'users', userId);
-      const snap = await getDoc(userRef);
-      if (snap.exists()) {
-        const data = snap.data();
-        firstNameInput.value = data.firstName || '';
-        lastNameInput.value = data.lastName || '';
-        usernameInput.value = data.username || '';
+      const docSnap = await getDoc(userRef);
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        firstNameEl.value = data.firstName || '';
+        lastNameEl.value = data.lastName || '';
+        usernameEl.value = data.username || '';
         if (data.phone) setPhoneFields(data.phone);
-        countryInput.value = data.country || '';
-        stateInput.value = data.state || '';
-        addressInput.value = data.address || '';
-        experienceSelect.value = data.experience || '';
-        accountTypeSelect.value = data.accountType || 'تجريبي';
-        initialCapitalInput.value = data.initialCapital || '';
-        maxDrawdownInput.value = data.maxDrawdown || '';
+        countryEl.value = data.country || '';
+        stateEl.value = data.state || '';
+        addressEl.value = data.address || '';
+        experienceEl.value = data.experience || '';
+        accountTypeEl.value = data.accountType || 'تجريبي';
+        initialCapitalEl.value = data.initialCapital || '';
+        maxDrawdownEl.value = data.maxDrawdown || '';
+        console.log("✅ تم تحميل البيانات بنجاح");
+      } else {
+        console.log("لا توجد بيانات سابقة لهذا المستخدم");
       }
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error("Firestore load error:", error);
+      showMessage('❌ خطأ في تحميل البيانات: ' + error.message, 'error');
     }
   }
 
-  // مستمع حفظ النموذج
+  // عند إرسال النموذج
   profileForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!currentUser) {
-      showMessage('الرجاء تسجيل الدخول أولاً', 'error');
+      showMessage('❌ الرجاء تسجيل الدخول أولاً', 'error');
       return;
     }
 
     const formData = {
-      firstName: firstNameInput.value,
-      lastName: lastNameInput.value,
-      username: usernameInput.value,
+      firstName: firstNameEl.value,
+      lastName: lastNameEl.value,
+      username: usernameEl.value,
       phone: getFullPhone(),
-      country: countryInput.value,
-      state: stateInput.value,
-      address: addressInput.value,
-      experience: experienceSelect.value,
-      accountType: accountTypeSelect.value,
-      initialCapital: initialCapitalInput.value ? Number(initialCapitalInput.value) : 0,
-      maxDrawdown: maxDrawdownInput.value ? Number(maxDrawdownInput.value) : 0,
+      country: countryEl.value,
+      state: stateEl.value,
+      address: addressEl.value,
+      experience: experienceEl.value,
+      accountType: accountTypeEl.value,
+      initialCapital: initialCapitalEl.value ? Number(initialCapitalEl.value) : 0,
+      maxDrawdown: maxDrawdownEl.value ? Number(maxDrawdownEl.value) : 0
     };
-    await saveProfile(currentUser.uid, formData);
+
+    await saveProfileData(currentUser.uid, formData);
   });
 
-  // مراقبة حالة تسجيل الدخول وعرض اسم المستخدم من Auth
+  // مراقبة حالة تسجيل الدخول
   onAuthStateChanged(auth, async (user) => {
     if (!user) {
       window.location.href = 'index.html';
       return;
     }
     currentUser = user;
-    // عرض الاسم من Firebase Auth (الاسم الذي سجل به أول مرة)
+    // عرض الاسم من Firebase Auth
     let displayName = user.displayName;
-    if (!displayName) {
-      // إذا لم يكن هناك displayName نستخدم البريد قبل @
-      displayName = user.email ? user.email.split('@')[0] : 'المتداول';
-    }
+    if (!displayName) displayName = user.email ? user.email.split('@')[0] : 'المتداول';
     greetingName.innerHTML = `مرحباً، ${displayName}`;
     
-    // تحميل البيانات المحفوظة مسبقاً (إن وجدت)
-    await loadProfile(user.uid);
+    // تحميل البيانات المحفوظة
+    await loadProfileData(user.uid);
   });
 </script>
 </body>
