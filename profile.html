@@ -1,150 +1,549 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>الملف الشخصي - FundedX | منصة التداول المموَّلة</title>
-    <link rel="stylesheet" href="profile-style.css">
-    <!-- خط احترافي من Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <!-- Font Awesome 6 (مجاني للأيقونات) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>الملف الشخصي - FundedX</title>
+  <!-- Google Fonts + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(145deg, #f0f4ff 0%, #e9eefa 100%);
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+
+    /* الحاوية الرئيسية */
+    .profile-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 2rem;
+      box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* رأس الصفحة (بدون صورة) */
+    .profile-header {
+      background: linear-gradient(135deg, #1e2a3a, #0f172a);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      color: white;
+    }
+
+    .profile-header h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .profile-header p {
+      opacity: 0.8;
+      font-size: 0.95rem;
+    }
+
+    /* نموذج البطاقات */
+    .profile-form {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    .form-card {
+      background: #ffffff;
+      border-radius: 1.5rem;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+      border: 1px solid #eef2f6;
+      transition: box-shadow 0.2s;
+    }
+
+    .form-card:hover {
+      box-shadow: 0 12px 25px -8px rgba(0, 0, 0, 0.08);
+    }
+
+    .card-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #edf2f7;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .card-header i {
+      font-size: 1.5rem;
+      color: #2563eb;
+    }
+
+    .card-header h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    /* تنسيق الصفوف والحقول */
+    .form-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .form-group {
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .form-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 0.4rem;
+    }
+
+    .form-group label i {
+      color: #3b82f6;
+      width: 1.2rem;
+    }
+
+    /* حقل الهاتف مع الرمز */
+    .phone-wrapper {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .country-code {
+      width: 110px;
+      padding: 0.75rem 0.5rem;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 0.75rem;
+      background: #fafcff;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+
+    .country-code:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+    }
+
+    .phone-number {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 0.75rem;
+      font-size: 0.95rem;
+      font-family: inherit;
+      background: #fafcff;
+      transition: 0.2s;
+    }
+
+    .phone-number:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 0.75rem;
+      font-size: 0.95rem;
+      font-family: inherit;
+      background: #fafcff;
+      transition: 0.2s;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+      background: white;
+    }
+
+    input[readonly] {
+      background-color: #f8fafc;
+      cursor: default;
+      color: #475569;
+    }
+
+    .btn-save {
+      background: linear-gradient(95deg, #2563eb, #1e40af);
+      border: none;
+      color: white;
+      padding: 0.9rem 2rem;
+      border-radius: 3rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: 0.25s;
+      box-shadow: 0 5px 12px rgba(37,99,235,0.25);
+    }
+
+    .btn-save:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 20px -8px rgba(37,99,235,0.4);
+    }
+
+    .form-actions {
+      text-align: center;
+      padding-top: 0.5rem;
+    }
+
+    .message {
+      margin-top: 1rem;
+      padding: 0.8rem;
+      border-radius: 1rem;
+      font-weight: 500;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .message.success {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
+    .message.error {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+
+    /* روابط العودة */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #f1f5f9;
+      color: #1e293b;
+      padding: 0.6rem 1.5rem;
+      border-radius: 2rem;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.85rem;
+      margin: 1rem 2rem 0 2rem;
+      transition: 0.2s;
+    }
+
+    .back-link:hover {
+      background: #e2e8f0;
+    }
+
+    @media (max-width: 700px) {
+      body { padding: 1rem; }
+      .profile-form { padding: 1.2rem; }
+      .card-body { padding: 1rem; }
+      .form-row { flex-direction: column; gap: 0.8rem; }
+      .profile-header h1 { font-size: 1.5rem; }
+    }
+  </style>
 </head>
 <body>
-    <div class="profile-page">
-        <!-- الهيدر مع الترحيب وصورة الملف الشخصي -->
-        <div class="profile-header">
-            <div class="profile-avatar-wrapper">
-                <div class="avatar-container">
-                    <img id="profileImage" src="https://ui-avatars.com/api/?background=667eea&color=fff&rounded=true&size=128&bold=true&name=User" alt="صورة الملف الشخصي">
-                    <label for="imageUpload" class="avatar-upload-btn">
-                        <i class="fas fa-camera"></i>
-                    </label>
-                    <input type="file" id="imageUpload" accept="image/*" style="display: none;">
-                </div>
-                <h2 id="userNameDisplay">مرحباً، المتداول</h2>
-                <p class="user-role">متداول مموَّل <i class="fas fa-check-circle"></i></p>
-            </div>
+
+<div class="profile-container">
+  <!-- رأس ترحيبي باسم المستخدم من Firebase Auth -->
+  <div class="profile-header">
+    <h1 id="greetingName">مرحباً، المتداول</h1>
+    <p>إدارة ملفك الشخصي وبيانات التداول</p>
+  </div>
+
+  <!-- رابط العودة إلى لوحة التحكم (dashboard) -->
+  <div style="padding: 0 2rem; text-align: left;">
+    <a href="dashboard.html" class="back-link"><i class="fas fa-arrow-right"></i> العودة إلى لوحة التحكم</a>
+  </div>
+
+  <form id="profileForm" class="profile-form">
+    <!-- بطاقة المعلومات الشخصية -->
+    <div class="form-card">
+      <div class="card-header">
+        <i class="fas fa-user-circle"></i>
+        <h3>المعلومات الشخصية</h3>
+      </div>
+      <div class="card-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label><i class="fas fa-user"></i> الاسم الأول</label>
+            <input type="text" id="firstName" placeholder="أدخل اسمك الأول">
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-user-tag"></i> اللقب</label>
+            <input type="text" id="lastName" placeholder="أدخل لقبك">
+          </div>
         </div>
-
-        <!-- نموذج الملف الشخصي - مقسم إلى أقسام -->
-        <form id="profileForm" class="profile-form">
-            <!-- بطاقة المعلومات الشخصية -->
-            <div class="form-card">
-                <div class="card-header">
-                    <i class="fas fa-user-circle"></i>
-                    <h3>المعلومات الشخصية</h3>
-                </div>
-                <div class="card-body">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label><i class="fas fa-user"></i> الاسم الأول</label>
-                            <input type="text" id="firstName" placeholder="أدخل اسمك الأول">
-                        </div>
-                        <div class="form-group">
-                            <label><i class="fas fa-user-tag"></i> اللقب</label>
-                            <input type="text" id="lastName" placeholder="أدخل لقبك">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fas fa-at"></i> اسم المستخدم</label>
-                        <input type="text" id="username" placeholder="@username">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label><i class="fas fa-phone-alt"></i> رقم الهاتف</label>
-                            <input type="tel" id="phone" placeholder="+1234567890">
-                        </div>
-                        <div class="form-group">
-                            <label><i class="fas fa-calendar-alt"></i> تاريخ الميلاد</label>
-                            <input type="date" id="birthDate">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fas fa-map-marker-alt"></i> العنوان الكامل</label>
-                        <input type="text" id="address" placeholder="البلد، المدينة، الشارع">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label><i class="fas fa-flag"></i> الدولة</label>
-                            <input type="text" id="country" placeholder="الدولة">
-                        </div>
-                        <div class="form-group">
-                            <label><i class="fas fa-city"></i> الولاية/المنطقة</label>
-                            <input type="text" id="state" placeholder="الولاية">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- بطاقة المعلومات المهنية للمتداول -->
-            <div class="form-card">
-                <div class="card-header">
-                    <i class="fas fa-chart-line"></i>
-                    <h3>بيانات التداول المهنية</h3>
-                </div>
-                <div class="card-body">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label><i class="fas fa-graduation-cap"></i> مستوى الخبرة</label>
-                            <select id="experience">
-                                <option value="">اختر المستوى</option>
-                                <option value="مبتدئ">مبتدئ</option>
-                                <option value="متوسط">متوسط</option>
-                                <option value="محترف">محترف</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label><i class="fas fa-wallet"></i> نوع الحساب</label>
-                            <select id="accountType">
-                                <option value="تجريبي">حساب تجريبي</option>
-                                <option value="ممول">حساب ممول</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label><i class="fas fa-coins"></i> رأس المال الأولي ($)</label>
-                            <input type="number" id="initialCapital" step="1000" placeholder="مثال: 10000">
-                        </div>
-                        <div class="form-group">
-                            <label><i class="fas fa-chart-simple"></i> الأرباح الإجمالية ($)</label>
-                            <input type="number" id="totalProfit" step="0.01" readonly placeholder="0.00">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label><i class="fas fa-repeat"></i> عدد الصفقات</label>
-                            <input type="number" id="totalTrades" readonly placeholder="0">
-                        </div>
-                        <div class="form-group">
-                            <label><i class="fas fa-percent"></i> نسبة النجاح (%)</label>
-                            <input type="number" id="successRate" step="0.01" readonly placeholder="0.00">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label><i class="fas fa-dollar-sign"></i> الرصيد الحالي ($)</label>
-                            <input type="number" id="currentBalance" step="0.01" readonly placeholder="0.00">
-                        </div>
-                        <div class="form-group">
-                            <label><i class="fas fa-arrow-down"></i> الخسائر القصوى ($)</label>
-                            <input type="number" id="maxDrawdown" step="0.01" placeholder="مثال: 5000">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- أزرار الإجراءات -->
-            <div class="form-actions">
-                <button type="submit" class="btn-save">
-                    <i class="fas fa-save"></i> حفظ التغييرات
-                </button>
-                <div id="message" class="message"></div>
-            </div>
-        </form>
+        <div class="form-group">
+          <label><i class="fas fa-at"></i> اسم المستخدم (للظهور)</label>
+          <input type="text" id="username" placeholder="@username">
+        </div>
+        <!-- حقل الهاتف مع رمز البلد -->
+        <div class="form-group">
+          <label><i class="fas fa-phone-alt"></i> رقم الهاتف</label>
+          <div class="phone-wrapper">
+            <select id="countryCode" class="country-code">
+              <option value="+213">🇩🇿 +213 (الجزائر)</option>
+              <option value="+20">🇪🇬 +20 (مصر)</option>
+              <option value="+966">🇸🇦 +966 (السعودية)</option>
+              <option value="+971">🇦🇪 +971 (الإمارات)</option>
+              <option value="+961">🇱🇧 +961 (لبنان)</option>
+              <option value="+962">🇯🇴 +962 (الأردن)</option>
+              <option value="+965">🇰🇼 +965 (الكويت)</option>
+              <option value="+974">🇶🇦 +974 (قطر)</option>
+              <option value="+1">🇺🇸 +1 (الولايات المتحدة)</option>
+              <option value="+44">🇬🇧 +44 (بريطانيا)</option>
+            </select>
+            <input type="tel" id="phoneNumber" class="phone-number" placeholder="رقم الهاتف">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label><i class="fas fa-flag"></i> الدولة</label>
+            <input type="text" id="country" placeholder="الدولة">
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-city"></i> الولاية/المدينة</label>
+            <input type="text" id="state" placeholder="الولاية أو المدينة">
+          </div>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-map-marker-alt"></i> العنوان التفصيلي</label>
+          <input type="text" id="address" placeholder="العنوان الكامل">
+        </div>
+      </div>
     </div>
 
-    <script type="module" src="profile-script.js"></script>
+    <!-- بطاقة المعلومات المهنية (للتداول) -->
+    <div class="form-card">
+      <div class="card-header">
+        <i class="fas fa-chart-line"></i>
+        <h3>بيانات التداول</h3>
+      </div>
+      <div class="card-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label><i class="fas fa-graduation-cap"></i> مستوى الخبرة</label>
+            <select id="experience">
+              <option value="">اختر المستوى</option>
+              <option value="مبتدئ">مبتدئ</option>
+              <option value="متوسط">متوسط</option>
+              <option value="محترف">محترف</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-wallet"></i> نوع الحساب</label>
+            <select id="accountType">
+              <option value="تجريبي">حساب تجريبي</option>
+              <option value="ممول">حساب ممول</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label><i class="fas fa-coins"></i> رأس المال الأولي ($)</label>
+            <input type="number" id="initialCapital" step="1000" placeholder="مثال: 10000">
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-chart-simple"></i> الخسائر القصوى ($)</label>
+            <input type="number" id="maxDrawdown" step="100" placeholder="مثال: 3000">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-save"><i class="fas fa-save"></i> حفظ التغييرات</button>
+      <div id="message" class="message"></div>
+    </div>
+  </form>
+</div>
+
+<script type="module">
+  // ------------------- Firebase Configuration -------------------
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+  // 🔥 نفس الإعدادات التي تستخدمها في dashboard و index (تأكد من صحتها)
+  const firebaseConfig = {
+    apiKey: "AIzaSyDIGQ8MTdb3XzJ8w4CuktSADkLF9MUZIYI",
+    authDomain: "tradingfinanceapp.firebaseapp.com",
+    projectId: "tradingfinanceapp",
+    storageBucket: "tradingfinanceapp.firebasestorage.app",
+    messagingSenderId: "901228416943",
+    appId: "1:901228416943:web:013b973250d7b4fa4ce95a"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // عناصر الصفحة
+  const greetingName = document.getElementById('greetingName');
+  const firstNameInput = document.getElementById('firstName');
+  const lastNameInput = document.getElementById('lastName');
+  const usernameInput = document.getElementById('username');
+  const countryCodeSelect = document.getElementById('countryCode');
+  const phoneNumberInput = document.getElementById('phoneNumber');
+  const countryInput = document.getElementById('country');
+  const stateInput = document.getElementById('state');
+  const addressInput = document.getElementById('address');
+  const experienceSelect = document.getElementById('experience');
+  const accountTypeSelect = document.getElementById('accountType');
+  const initialCapitalInput = document.getElementById('initialCapital');
+  const maxDrawdownInput = document.getElementById('maxDrawdown');
+  const messageDiv = document.getElementById('message');
+  const profileForm = document.getElementById('profileForm');
+
+  let currentUser = null;
+
+  function showMessage(msg, type) {
+    messageDiv.textContent = msg;
+    messageDiv.className = `message ${type}`;
+    setTimeout(() => {
+      messageDiv.textContent = '';
+      messageDiv.className = 'message';
+    }, 3500);
+  }
+
+  // دمج رمز البلد + رقم الهاتف
+  function getFullPhone() {
+    const code = countryCodeSelect.value;
+    const number = phoneNumberInput.value.trim();
+    if (!number) return '';
+    return `${code} ${number}`;
+  }
+
+  // تفكيك الهاتف إلى رمز + رقم عند التحميل
+  function setPhoneFields(fullPhone) {
+    if (!fullPhone) return;
+    const parts = fullPhone.split(' ');
+    if (parts.length >= 2) {
+      const possibleCode = parts[0];
+      // التحقق من وجود الرمز في القائمة
+      let exists = false;
+      for (let i = 0; i < countryCodeSelect.options.length; i++) {
+        if (countryCodeSelect.options[i].value === possibleCode) {
+          countryCodeSelect.value = possibleCode;
+          exists = true;
+          break;
+        }
+      }
+      if (!exists) countryCodeSelect.value = "+213";
+      const numberPart = parts.slice(1).join(' ');
+      phoneNumberInput.value = numberPart;
+    } else {
+      phoneNumberInput.value = fullPhone;
+    }
+  }
+
+  // حفظ البيانات في Firestore
+  async function saveProfile(userId, data) {
+    try {
+      const userRef = doc(db, 'users', userId);
+      await setDoc(userRef, { ...data, updatedAt: serverTimestamp() }, { merge: true });
+      showMessage('✅ تم حفظ الملف الشخصي بنجاح!', 'success');
+    } catch (err) {
+      console.error(err);
+      showMessage('❌ فشل الحفظ: ' + err.message, 'error');
+    }
+  }
+
+  // تحميل البيانات وعرضها في الحقول
+  async function loadProfile(userId) {
+    try {
+      const userRef = doc(db, 'users', userId);
+      const snap = await getDoc(userRef);
+      if (snap.exists()) {
+        const data = snap.data();
+        firstNameInput.value = data.firstName || '';
+        lastNameInput.value = data.lastName || '';
+        usernameInput.value = data.username || '';
+        if (data.phone) setPhoneFields(data.phone);
+        countryInput.value = data.country || '';
+        stateInput.value = data.state || '';
+        addressInput.value = data.address || '';
+        experienceSelect.value = data.experience || '';
+        accountTypeSelect.value = data.accountType || 'تجريبي';
+        initialCapitalInput.value = data.initialCapital || '';
+        maxDrawdownInput.value = data.maxDrawdown || '';
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  // مستمع حفظ النموذج
+  profileForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!currentUser) {
+      showMessage('الرجاء تسجيل الدخول أولاً', 'error');
+      return;
+    }
+
+    const formData = {
+      firstName: firstNameInput.value,
+      lastName: lastNameInput.value,
+      username: usernameInput.value,
+      phone: getFullPhone(),
+      country: countryInput.value,
+      state: stateInput.value,
+      address: addressInput.value,
+      experience: experienceSelect.value,
+      accountType: accountTypeSelect.value,
+      initialCapital: initialCapitalInput.value ? Number(initialCapitalInput.value) : 0,
+      maxDrawdown: maxDrawdownInput.value ? Number(maxDrawdownInput.value) : 0,
+    };
+    await saveProfile(currentUser.uid, formData);
+  });
+
+  // مراقبة حالة تسجيل الدخول وعرض اسم المستخدم من Auth
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      window.location.href = 'index.html';
+      return;
+    }
+    currentUser = user;
+    // عرض الاسم من Firebase Auth (الاسم الذي سجل به أول مرة)
+    let displayName = user.displayName;
+    if (!displayName) {
+      // إذا لم يكن هناك displayName نستخدم البريد قبل @
+      displayName = user.email ? user.email.split('@')[0] : 'المتداول';
+    }
+    greetingName.innerHTML = `مرحباً، ${displayName}`;
+    
+    // تحميل البيانات المحفوظة مسبقاً (إن وجدت)
+    await loadProfile(user.uid);
+  });
+</script>
 </body>
 </html>
