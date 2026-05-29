@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Prime Funded - Rules Hub | Official Trading Rules</title>
+<style>
+
+/* ----- GLOBAL RESET & FONTS ----- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+  background: #0b1220;
+  color: #f0f4fa;
+  transition: background 0.25s ease, color 0.2s ease;
+}
+
+/* LIGHT MODERN THEME */
+body.light {
+  background: #f4f7fd;
+  color: #1a2634;
+}
+
+/* ===== TOP BAR (sleek, glassmorphic, consistent) ===== */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 28px;
+  background: rgba(10, 15, 30, 0.75);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+body.light .topbar {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  font-size: 1.35rem;
+  background: linear-gradient(135deg, #38bdf8, #2dd4bf);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+body.light .logo {
+  background: linear-gradient(135deg, #0f67b3, #0f766e);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.status {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 30px;
+  background: rgba(34, 197, 94, 0.12);
+  color: #2ecc71;
+  border: 1px solid rgba(46, 204, 113, 0.35);
+  letter-spacing: 0.3px;
+}
+
+body.light .status {
+  background: #e0f2e9;
+  color: #0e7c42;
+  border-color: #b8e0cc;
+}
+
+/* controls group */
+.controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+select, button {
+  padding: 8px 14px;
+  border-radius: 36px;
+  border: none;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.08);
+  color: #eef2ff;
+  font-weight: 500;
+  font-size: 0.85rem;
+  transition: 0.2s;
+  backdrop-filter: blur(4px);
+}
+
+body.light select,
+body.light button {
+  background: #ffffff;
+  color: #1f2a3e;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+
+select:hover, button:hover {
+  background: rgba(56, 189, 248, 0.2);
+  transform: scale(0.97);
+}
+
+body.light select:hover,
+body.light button:hover {
+  background: #eef2ff;
+  border-color: #38bdf8;
+}
+
+/* main container */
+.container {
+  max-width: 1050px;
+  margin: 100px auto 50px auto;
+  padding: 0 24px;
+}
+
+/* page header */
+.rules-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  background: linear-gradient(120deg, #e0f2fe, #7dd3fc);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 12px;
+  letter-spacing: -0.3px;
+}
+
+body.light h2 {
+  background: linear-gradient(120deg, #1e3a8a, #0891b2);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.sub {
+  font-size: 0.9rem;
+  opacity: 0.75;
+  margin-bottom: 18px;
+}
+
+/* search bar */
+.search-wrapper {
+  margin-bottom: 28px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search {
+  width: 100%;
+  padding: 14px 22px;
+  border-radius: 60px;
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(6px);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: all 0.2s;
+}
+
+body.light .search {
+  background: white;
+  color: #0b1220;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+}
+
+.search:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 3px rgba(56,189,248,0.2);
+  background: rgba(0,0,0,0.2);
+}
+
+body.light .search:focus {
+  background: #ffffff;
+}
+
+/* cards grid / list */
+.rules-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.card {
+  background: rgba(18, 24, 38, 0.7);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 28px;
+  padding: 1.4rem 1.8rem;
+  transition: all 0.25s;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+body.light .card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.03);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.25);
+}
+
+.card h3 {
+  font-size: 1.45rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+  color: #7ad0ff;
+  border-left: 4px solid #38bdf8;
+  padding-left: 14px;
+}
+
+body.light .card h3 {
+  color: #0f67b3;
+  border-left-color: #0f67b3;
+}
+
+/* list style */
+.rules-list {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rules-list li {
+  position: relative;
+  padding-left: 28px;
+  font-size: 0.98rem;
+  line-height: 1.45;
+  color: #d1dbf0;
+  transition: 0.1s;
+}
+
+body.light .rules-list li {
+  color: #2c3e4e;
+}
+
+.rules-list li::before {
+  content: "▹";
+  position: absolute;
+  left: 4px;
+  color: #38bdf8;
+  font-size: 1rem;
+}
+
+body.light .rules-list li::before {
+  color: #0891b2;
+}
+
+/* empty state / no results */
+.no-match {
+  text-align: center;
+  background: rgba(255,255,255,0.03);
+  padding: 40px;
+  border-radius: 48px;
+  font-style: italic;
+  color: #9ca3af;
+}
+
+/* dashboard button style hint */
+.dashboard-hint {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* responsive */
+@media (max-width: 650px) {
+  .topbar {
+    padding: 0 16px;
+    height: 62px;
+  }
+  .logo {
+    font-size: 1rem;
+  }
+  .card {
+    padding: 1.2rem;
+  }
+  .container {
+    margin-top: 88px;
+  }
+  .controls button, .controls select {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+  }
+  h2 {
+    font-size: 1.8rem;
+  }
+}
+
+/* animation fade-in */
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.card {
+  animation: fadeSlide 0.3s ease-out;
+}
+
+/* special badge for section */
+.badge-icon {
+  display: inline-block;
+  margin-right: 8px;
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="logo">⚡ PRIME FUNDED</div>
+    <div class="status">● LIVE RULES ENGINE</div>
+  </div>
+  <div class="controls">
+    <select id="langSelect" aria-label="Language selector">
+      <option value="en">🇬🇧 EN</option>
+      <option value="ar">🇸🇦 AR</option>
+      <option value="fr">🇫🇷 FR</option>
+      <option value="zh">🇨🇳 中文</option>
+    </select>
+    <button id="themeToggleBtn" aria-label="Toggle dark/light mode">🌙</button>
+    <button id="backToDashboardBtn">📊 Dashboard</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="rules-header">
+    <h2 id="pageTitle">⚖️ Trading Regulations</h2>
+    <div class="sub" id="subHeader">Official rules & compliance | Prime Funded</div>
+  </div>
+
+  <div class="search-wrapper">
+    <input type="text" id="searchInput" class="search" placeholder="🔍 Search rules, keywords (KYC, VPN, drawdown...)" autocomplete="off">
+  </div>
+
+  <div id="rulesContainer" class="rules-grid"></div>
+  <div class="dashboard-hint">
+    ✨ <span id="hintText">Full transparency — adhere to all rules to secure payouts</span>
+  </div>
+</div>
+
+<script>
+  // --------------------------------------------------------------
+  // MULTI-LANGUAGE DATABASE (EN, AR, FR, ZH) with FULL RULES
+  // enriched content exactly as provided but extended fully
+  // --------------------------------------------------------------
+  const translations = {
+    en: {
+      title: "📜 Prime Funded Rules",
+      sub: "Compliance first · Trade with confidence",
+      hint: "Violations may lead to review — stay compliant",
+      sections: [
+        { t: "🔐 KYC Verification", items: ["Full identity verification required", "No fake or duplicate accounts", "Name must match official documents", "Proof of address (recent bill)", "KYC must be completed before first withdrawal"] },
+        { t: "🌍 IP & Security Rules", items: ["Same country IP required (no cross-region jumps)", "VPN / Proxy strictly forbidden", "Device fingerprint tracking active", "Suspicious login leads to immediate compliance review", "Two-factor authentication (2FA) recommended"] },
+        { t: "⚠️ Risk Management", items: ["Daily loss limit must be respected (max 4% daily)", "Max total drawdown: 8% from peak equity", "Risk per trade: 1–2% recommended", "Stop Loss is mandatory on all positions", "No hedging across multiple accounts"] },
+        { t: "📈 Trading Rules", items: ["Manual trading only — no automated execution", "No EA / Bots / algorithmic scripts allowed", "No copy trading between accounts (mirroring forbidden)", "All trades must be based on genuine analysis", "Holding positions overnight allowed but with risk limits", "News trading allowed but with strict SL"] },
+        { t: "💸 Payout Rules", items: ["Payout after compliance review (monthly cycles)", "Consistent profitability required (min 10 trading days)", "Violations may delay withdrawal up to 30 days", "Abusive strategies → account termination", "Profit split up to 90% for consistent performers", "Minimum payout: $500 / equivalent"] }
+      ]
+    },
+    ar: {
+      title: "📜 قواعد برايم فاندد",
+      sub: "الامتثال أولاً · تداول بثقة",
+      hint: "المخالفات قد تؤدي إلى مراجعة الحساب — حافظ على الالتزام",
+      sections: [
+        { t: "🔐 التحقق (KYC)", items: ["توثيق الهوية الكامل إلزامي", "منع الحسابات المكررة أو الوهمية", "يجب أن يتطابق الاسم مع المستندات الرسمية", "إثبات العنوان (فاتورة حديثة)", "إتمام KYC قبل أي سحب"] },
+        { t: "🌍 قواعد IP والأمان", items: ["نفس عنوان IP الخاص بالدولة مطلوب", "VPN والبروكسي ممنوع تماماً", "تتبع بصمة الجهاز مفعل", "أي دخول مشبوه يؤدي إلى مراجعة فورية", "المصادقة الثنائية (2FA) موصى بها"] },
+        { t: "⚠️ إدارة المخاطر", items: ["حد الخسارة اليومي 4% كحد أقصى", "أقصى سحب مسموح 8% من الذروة", "مخاطرة 1-2% لكل صفقة", "وقف الخسارة إلزامي لجميع المراكز", "ممنوع التحوط عبر حسابات متعددة"] },
+        { t: "📈 قواعد التداول", items: ["تداول يدوي فقط – لا تنفيذ آلي", "الروبوتات و EAs ممنوعة", "ممنوع نسخ الصفقات بين الحسابات", "جميع الصفقات تعتمد على تحليل حقيقي", "السماح بالمراكز الليلية مع احترام المخاطر", "تداول الأخبار مسموح مع وقف خسارة صارم"] },
+        { t: "💸 قواعد السحب", items: ["السحب بعد مراجعة الامتثال (دورات شهرية)", "الربحية الثابتة مطلوبة (10 أيام تداول على الأقل)", "المخالفات قد تؤخر السحب حتى 30 يومًا", "الاستراتيجيات المسيئة تؤدي إلى إنهاء الحساب", "نسبة أرباح تصل إلى 90% للملتزمين", "الحد الأدنى للسحب 500 دولار"] }
+      ]
+    },
+    fr: {
+      title: "📜 Règles de Trading",
+      sub: "Conformité d'abord · Tradez sereinement",
+      hint: "Les violations peuvent entraîner un examen — restez conforme",
+      sections: [
+        { t: "🔐 Vérification KYC", items: ["Vérification d'identité complète requise", "Pas de faux comptes ou doublons", "Le nom doit correspondre aux documents", "Justificatif de domicile récent", "KYC obligatoire avant tout retrait"] },
+        { t: "🌍 Règles IP & Sécurité", items: ["IP du même pays exigée", "VPN / Proxy strictement interdits", "Empreinte numérique active", "Connexion suspecte → examen immédiat", "Authentification à deux facteurs recommandée"] },
+        { t: "⚠️ Gestion des risques", items: ["Limite de perte quotidienne (4% max)", "Drawdown maximum: 8% du pic", "Risque 1-2% par trade", "Stop Loss obligatoire", "Pas de couverture entre comptes"] },
+        { t: "📈 Règles de Trading", items: ["Trading manuel uniquement", "Robots / EAs interdits", "Pas de copy-trading entre comptes", "Analyse authentique requise", "Positions overnight autorisées avec SL"] },
+        { t: "💸 Règles de paiement", items: ["Paiement après revue de conformité", "Performance constante requise (10 jours)", "Violation → délai possible jusqu'à 30j", "Stratégies abusives → résiliation", "Split des profits jusqu'à 90%", "Retrait minimum 500$"] }
+      ]
+    },
+    zh: {
+      title: "📜 交易规章与合规",
+      sub: "合规优先 · 自信交易",
+      hint: "违反规则可能导致审查 — 请保持合规",
+      sections: [
+        { t: "🔐 KYC 验证", items: ["完整身份验证", "禁止伪造或重复账户", "姓名必须与证件匹配", "近期住址证明", "首次提款前必须完成KYC"] },
+        { t: "🌍 IP 与安全规则", items: ["要求同一国家 IP", "VPN / 代理严格禁止", "设备指纹追踪活跃", "可疑登录将导致合规审查", "推荐双重验证 (2FA)"] },
+        { t: "⚠️ 风险管理", items: ["每日损失限额4%", "最大回撤为峰值的8%", "每笔交易风险 1–2%", "强制止损", "禁止跨账户对冲"] },
+        { t: "📈 交易规则", items: ["仅限手动交易", "禁止EA/机器人/算法", "禁止账户间复制交易", "基于真实分析", "允许隔夜持仓但须止损"] },
+        { t: "💸 提款规则", items: ["合规审核后支付", "持续表现（最少10个交易日）", "违规可能导致延迟30天", "滥用策略 → 账户终止", "绩效优异者可获90%利润分成", "最低提款500美元"] }
+      ]
+    }
+  };
+
+  let currentLang = "en";      // default
+  let filterText = "";
+
+  // DOM elements
+  const container = document.getElementById("rulesContainer");
+  const searchInput = document.getElementById("searchInput");
+  const langSelect = document.getElementById("langSelect");
+  const themeBtn = document.getElementById("themeToggleBtn");
+  const backBtn = document.getElementById("backToDashboardBtn");
+  const pageTitleElem = document.getElementById("pageTitle");
+  const subHeaderElem = document.getElementById("subHeader");
+  const hintSpan = document.getElementById("hintText");
+
+  // --- helper: render current language + filter
+  function renderRules() {
+    const data = translations[currentLang];
+    if (!data) return;
+
+    // update title & hints
+    pageTitleElem.innerText = data.title;
+    subHeaderElem.innerText = data.sub;
+    hintSpan.innerText = data.hint;
+
+    const sections = data.sections;
+    let html = "";
+    let hasVisible = false;
+
+    for (let secIdx = 0; secIdx < sections.length; secIdx++) {
+      const section = sections[secIdx];
+      const sectionTitle = section.t;
+      const items = section.items;
+
+      // filter logic (case-insensitive, multilingual support)
+      let filteredItems = items;
+      if (filterText.trim() !== "") {
+        const lowerFilter = filterText.toLowerCase().trim();
+        filteredItems = items.filter(item => item.toLowerCase().includes(lowerFilter));
+      }
+
+      if (filteredItems.length === 0 && filterText !== "") {
+        continue; // skip empty sections when searching
+      }
+      hasVisible = true;
+
+      // build list items
+      let listItemsHtml = "";
+      for (let i = 0; i < filteredItems.length; i++) {
+        listItemsHtml += `<li>${escapeHtml(filteredItems[i])}</li>`;
+      }
+
+      html += `
+        <div class="card" data-section="${secIdx}">
+          <h3>${escapeHtml(sectionTitle)}</h3>
+          <ul class="rules-list">
+            ${listItemsHtml}
+          </ul>
+        </div>
+      `;
+    }
+
+    if (!hasVisible && filterText !== "") {
+      html = `<div class="no-match">🔍 No matching rules found for "${escapeHtml(filterText)}". Try different keywords (KYC, VPN, drawdown...)</div>`;
+    } else if (!hasVisible && filterText === "") {
+      // fallback (should not happen, but safe)
+      html = `<div class="no-match">⚙️ Rules database loading...</div>`;
+    }
+
+    container.innerHTML = html;
+  }
+
+  // simple XSS protection
+  function escapeHtml(str) {
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+      return c;
+    });
+  }
+
+  // language change handler
+  function setLanguage(lang) {
+    if (translations[lang]) {
+      currentLang = lang;
+      renderRules();
+      // update select UI to match
+      if (langSelect.value !== lang) langSelect.value = lang;
+      // optional: update html dir for arabic
+      if (lang === "ar") {
+        document.body.style.direction = "rtl";
+        document.querySelector(".container").style.direction = "rtl";
+        // adjust card list padding for rtl
+        const style = document.createElement('style');
+        if (!document.getElementById('rtl-fix')) {
+          const rtlCss = document.createElement('style');
+          rtlCss.id = 'rtl-fix';
+          rtlCss.innerText = `body[dir="rtl"] .rules-list li { padding-left: 0; padding-right: 28px; } body[dir="rtl"] .rules-list li::before { left: auto; right: 4px; } body[dir="rtl"] .card h3 { border-left: none; border-right: 4px solid #38bdf8; padding-left: 0; padding-right: 14px; }`;
+          document.head.appendChild(rtlCss);
+        }
+        document.body.setAttribute('dir', 'rtl');
+      } else {
+        document.body.setAttribute('dir', 'ltr');
+        document.body.style.direction = "ltr";
+        if (document.querySelector(".container")) document.querySelector(".container").style.direction = "ltr";
+      }
+    } else {
+      // fallback
+      currentLang = "en";
+      renderRules();
+    }
+  }
+
+  // search function (live)
+  function handleSearch() {
+    filterText = searchInput.value;
+    renderRules();
+  }
+
+  // Theme toggler (dark/light)
+  function toggleTheme() {
+    document.body.classList.toggle("light");
+    const isLight = document.body.classList.contains("light");
+    themeBtn.innerText = isLight ? "☀️" : "🌙";
+    // optional: store preference
+    localStorage.setItem("primeTheme", isLight ? "light" : "dark");
+  }
+
+  // load theme from storage
+  function loadThemePreference() {
+    const saved = localStorage.getItem("primeTheme");
+    if (saved === "light") {
+      document.body.classList.add("light");
+      themeBtn.innerText = "☀️";
+    } else {
+      document.body.classList.remove("light");
+      themeBtn.innerText = "🌙";
+    }
+  }
+
+  // ----- DASHBOARD BUTTON BEHAVIOR (important) -----
+  // This function simulates returning to dashboard.html OR displaying a modal
+  // But because we want the page to be shown after clicking a button on dashboard,
+  // we need to properly manage: If user is on rules page and clicks "Dashboard",
+  // it should go back to dashboard.html. In the real environment, dashboard.html is separate.
+  // For seamless experience: if 'dashboard.html' exists, navigate; else show toast and fake redirect.
+  function goToDashboard() {
+    // Since the requirement: "اريد ان تضهر هذه صفحة بعد النقر على زر عرض الشروط الزر يوجد في صفحة dashboard.html"
+    // Means: from dashboard.html user clicks 'View Rules' button and this page appears.
+    // Therefore on THIS page, the Dashboard button should return to dashboard.html (or the main hub).
+    // Use try-catch or direct navigation. For demo/standalone environment, use window.location.
+    // If inside an iframe or file, provide fallback message but still try.
+    try {
+      // Attempt to navigate back to dashboard.html (relative path)
+      window.location.href = "dashboard.html";
+    } catch(e) {
+      alert("Dashboard navigation: please ensure dashboard.html is in the same directory. You can close this rules view.");
+      // fallback: show inline message
+      const msgDiv = document.createElement("div");
+      msgDiv.innerText = "↩️ Return to Dashboard manually (dashboard.html)";
+      msgDiv.style.position = "fixed";
+      msgDiv.style.bottom = "20px";
+      msgDiv.style.left = "20px";
+      msgDiv.style.background = "#1e293b";
+      msgDiv.style.padding = "8px 14px";
+      msgDiv.style.borderRadius = "40px";
+      msgDiv.style.color = "white";
+      msgDiv.style.zIndex = "9999";
+      document.body.appendChild(msgDiv);
+      setTimeout(() => msgDiv.remove(), 3000);
+    }
+  }
+
+  // Listeners
+  function init() {
+    loadThemePreference();
+
+    // set up language selector
+    langSelect.addEventListener("change", (e) => {
+      setLanguage(e.target.value);
+    });
+
+    searchInput.addEventListener("input", handleSearch);
+
+    themeBtn.addEventListener("click", toggleTheme);
+
+    backBtn.addEventListener("click", goToDashboard);
+
+    // initial render (english)
+    setLanguage("en");
+    // set default filter to empty
+    filterText = "";
+    renderRules();
+  }
+
+  // Additional hint: when page loads due to click from dashboard - it's perfect
+  // We also add an optional parameter detection: if ?ref=dashboard then show subtle message
+  if (window.location.search.includes("from=dashboard")) {
+    const toast = document.createElement("div");
+    toast.innerText = "✅ Rules page loaded — View terms from Dashboard";
+    toast.style.position = "fixed";
+    toast.style.bottom = "70px";
+    toast.style.left = "50%";
+    toast.style.transform = "translateX(-50%)";
+    toast.style.backgroundColor = "#38bdf8";
+    toast.style.color = "#0b1220";
+    toast.style.padding = "8px 20px";
+    toast.style.borderRadius = "40px";
+    toast.style.fontWeight = "bold";
+    toast.style.zIndex = "2000";
+    toast.style.backdropFilter = "blur(8px)";
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3500);
+  }
+
+  init();
+</script>
+</body>
+</html>
