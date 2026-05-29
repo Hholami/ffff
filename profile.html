@@ -195,20 +195,18 @@
 </div>
 
 <script type="module">
-  // ========== إعدادات Firebase ==========
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
   import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
-  // 🔥 تأكد من أن هذه البيانات صحيحة 100% (انسخها من Firebase Console)
+  // 🔥 الإعدادات الصحيحة لمشروعك
   const firebaseConfig = {
-        apiKey: "AIzaSyANR5zRHfDn5j8u8uQUj5fg9dPRmn_ZlyI",
-        authDomain: "tradingfinanceapp-9e2e2.firebaseapp.com",
-        projectId: "tradingfinanceapp-9e2e2",
-        storageBucket: "tradingfinanceapp-9e2e2.firebasestorage.app",
-        messagingSenderId: "395030573606",
-        appId: "1:395030573606:web:d226e06ed382eb723f6ce7",
-        measurementId: "G-M8MR66T1RG"
+    apiKey: "AIzaSyANR5zRHfDn5j8u8uQUj5fg9dPRmn_ZlyI",
+    authDomain: "tradingfinanceapp-9e2e2.firebaseapp.com",
+    projectId: "tradingfinanceapp-9e2e2",
+    storageBucket: "tradingfinanceapp-9e2e2.firebasestorage.app",
+    messagingSenderId: "395030573606",
+    appId: "1:395030573606:web:d226e06ed382eb723f6ce7"
   };
 
   const app = initializeApp(firebaseConfig);
@@ -243,7 +241,6 @@
     }, 4000);
   }
 
-  // دالة تجميع الهاتف
   function getFullPhone() {
     const code = countryCodeEl.value;
     const number = phoneNumberEl.value.trim();
@@ -251,7 +248,6 @@
     return `${code} ${number}`;
   }
 
-  // دالة تفكيك الهاتف عند التحميل
   function setPhoneFields(fullPhone) {
     if (!fullPhone) return;
     const parts = fullPhone.split(' ');
@@ -272,7 +268,6 @@
     }
   }
 
-  // حفظ البيانات في Firestore
   async function saveProfileData(userId, data) {
     try {
       const userRef = doc(db, 'users', userId);
@@ -286,7 +281,6 @@
     }
   }
 
-  // تحميل البيانات من Firestore وملء الحقول
   async function loadProfileData(userId) {
     try {
       const userRef = doc(db, 'users', userId);
@@ -306,7 +300,7 @@
         maxDrawdownEl.value = data.maxDrawdown || '';
         console.log("✅ تم تحميل البيانات بنجاح");
       } else {
-        console.log("لا توجد بيانات سابقة لهذا المستخدم");
+        console.log("لا توجد بيانات سابقة");
       }
     } catch (error) {
       console.error("Firestore load error:", error);
@@ -314,14 +308,12 @@
     }
   }
 
-  // عند إرسال النموذج
   profileForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!currentUser) {
       showMessage('❌ الرجاء تسجيل الدخول أولاً', 'error');
       return;
     }
-
     const formData = {
       firstName: firstNameEl.value,
       lastName: lastNameEl.value,
@@ -335,23 +327,18 @@
       initialCapital: initialCapitalEl.value ? Number(initialCapitalEl.value) : 0,
       maxDrawdown: maxDrawdownEl.value ? Number(maxDrawdownEl.value) : 0
     };
-
     await saveProfileData(currentUser.uid, formData);
   });
 
-  // مراقبة حالة تسجيل الدخول
   onAuthStateChanged(auth, async (user) => {
     if (!user) {
       window.location.href = 'index.html';
       return;
     }
     currentUser = user;
-    // عرض الاسم من Firebase Auth
     let displayName = user.displayName;
     if (!displayName) displayName = user.email ? user.email.split('@')[0] : 'المتداول';
     greetingName.innerHTML = `مرحباً، ${displayName}`;
-    
-    // تحميل البيانات المحفوظة
     await loadProfileData(user.uid);
   });
 </script>
