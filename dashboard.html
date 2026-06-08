@@ -804,8 +804,7 @@ document.querySelectorAll('.supportCardBtn').forEach(btn => btn.addEventListener
 });
   document.querySelectorAll('.quickBuyBtn').forEach(btn => btn.addEventListener('click', () => showDemoMessage(translations[currentLang].buyChallengeTitle)));
   document.querySelectorAll('.rulesBtn').forEach(btn => btn.addEventListener('click', () => showDemoMessage(translations[currentLang].rulesTitle)));
- document.getElementById('viewPlansBtn').addEventListener('click', () => {
-    window.location.href = 'profile.html';
+  document.querySelectorAll('.profileCardBtn').forEach(btn => btn.addEventListener('click', () => showDemoMessage(translations[currentLang].profileTitle)));
   document.querySelectorAll('.supportCardBtn').forEach(btn => btn.addEventListener('click', () => showDemoMessage(translations[currentLang].supportTitle)));
   document.querySelectorAll('#sidebarNav a').forEach(link => link.addEventListener('click', (e) => { e.preventDefault(); setActiveLink(link); }));
   menuBtn.addEventListener('click', toggleSidebar);
