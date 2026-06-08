@@ -483,11 +483,12 @@
       <h1 id="heroTitle">مرحباً <span id="userNameHero">...</span>، ابدأ رحلتك نحو حساب ممول</h1>
       <p id="heroDesc">رصيدك التجريبي: <strong id="userBalanceHero">$0</strong> | حالة التحدي: <span id="challengeStatusHero">...</span></p>
       <div class="hero-buttons">
-        <button class="primary-btn" id="buyChallengeHero"><i class="fas fa-rocket"></i> <span data-i18n="buyNow">شراء تحدي جديد</span></button>
-       <button class="secondary-btn" id="viewPlansBtn" onclick="window.location.href='th.html'">
-    <i class="fas fa-eye"></i>
-    <span data-i18n="viewPlans">مشاهدة الخطط</span>
-</button>
+       <button class="primary-btn" id="buyChallengeHero"><i class="fas fa-rocket"></i> <span data-i18n="buyNow">شراء تحدي جديد</span></button>
+    <script>
+document.getElementById("viewPlansBtn").addEventListener("click", function() {
+    window.location.href = "ht.html";
+});
+</script>
       </div>
     </div>
     <div class="hero-image">
