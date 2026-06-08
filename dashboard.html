@@ -803,7 +803,10 @@ document.querySelectorAll('.supportCardBtn').forEach(btn => btn.addEventListener
     window.location.href = 'th.html';
 });
   document.querySelectorAll('.quickBuyBtn').forEach(btn => btn.addEventListener('click', () => showDemoMessage(translations[currentLang].buyChallengeTitle)));
-  document.querySelectorAll('.rulesBtn').forEach(btn => btn.addEventListener('click', () => showDemoMessage(translations[currentLang].rulesTitle)));
+ document.querySelector('.rulesBtn').onclick = () => {
+    window.location.href = 'rules.html';
+};
+
   document.querySelector('.profileCardBtn').onclick = () => {
     window.location.href = 'profile.html';
 };
