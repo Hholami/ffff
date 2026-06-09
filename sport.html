@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProFunded Support Center</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #020617, #0f172a, #1e293b);
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 40px;
+    }
+
+    .logo {
+      font-size: 34px;
+      font-weight: 700;
+      background: linear-gradient(90deg, #3b82f6, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .back-btn {
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: bold;
+      transition: .3s;
+      display: inline-block;
+      border: none;
+      cursor: pointer;
+    }
+
+    .back-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .language {
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .08);
+      color: white;
+    }
+
+    .language option {
+      color: black;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .hero h1 {
+      font-size: 50px;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      color: #94a3b8;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, .05);
+      border: 1px solid rgba(255, 255, 255, .08);
+      padding: 25px;
+      border-radius: 20px;
+      text-align: center;
+      backdrop-filter: blur(15px);
+    }
+
+    .card i {
+      font-size: 40px;
+      color: #3b82f6;
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #94a3b8;
+    }
+
+    .support-box {
+      background: rgba(255, 255, 255, .05);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 25px;
+      padding: 30px;
+    }
+
+    .ticket {
+      background: #111827;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #60a5fa;
+      font-weight: bold;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .08);
+      color: white;
+    }
+
+    textarea {
+      height: 150px;
+      resize: none;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #94a3b8;
+    }
+
+    .send-btn {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #2563eb, #3b82f6);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .send-btn:hover {
+      opacity: 0.9;
+      transform: scale(0.99);
+    }
+
+    .contact {
+      margin-top: 30px;
+      background: rgba(255, 255, 255, .03);
+      padding: 25px;
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    .contact p {
+      color: #94a3b8;
+      margin: 15px 0;
+      line-height: 1.7;
+    }
+
+    .email-btn {
+      display: inline-block;
+      padding: 14px 25px;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .stat {
+      background: rgba(255, 255, 255, .05);
+      padding: 20px;
+      border-radius: 15px;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 8px;
+      color: #60a5fa;
+      font-weight: bold;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #64748b;
+    }
+
+    /* ===== MODAL STYLES (جميلة) ===== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0.2s, opacity 0.2s;
+    }
+
+    .modal-overlay.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .modal-card {
+      background: linear-gradient(145deg, #0f172a, #111827);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 32px;
+      width: 90%;
+      max-width: 450px;
+      padding: 30px 25px;
+      text-align: center;
+      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
+      transform: scale(0.9);
+      transition: transform 0.2s ease;
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: scale(1);
+    }
+
+    .modal-icon {
+      font-size: 70px;
+      color: #3b82f6;
+      margin-bottom: 20px;
+    }
+
+    .modal-card h2 {
+      font-size: 28px;
+      margin-bottom: 12px;
+      background: linear-gradient(90deg, #ffffff, #94a3f8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .modal-card p {
+      color: #cbd5e1;
+      font-size: 18px;
+      line-height: 1.5;
+      margin-bottom: 25px;
+    }
+
+    .modal-close {
+      background: linear-gradient(135deg, #2563eb, #1e40af);
+      border: none;
+      padding: 12px 28px;
+      border-radius: 40px;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .modal-close:hover {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      transform: scale(1.02);
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 35px;
+      }
+
+      .modal-card {
+        padding: 25px 20px;
+      }
+
+      .modal-card h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="topbar">
+      <a href="dashboard.html" class="back-btn" id="backBtn">← Back To Dashboard</a>
+      <div class="logo">ProFunded</div>
+      <select id="lang" class="language" onchange="changeLanguage()">
+        <option value="en">English</option>
+        <option value="ar">العربية</option>
+        <option value="fr">Français</option>
+        <option value="es">Español</option>
+      </select>
+    </div>
+
+    <div class="hero">
+      <h1 id="title">Support Center</h1>
+      <p id="desc">Professional support available 24/7 for all traders</p>
+    </div>
+
+    <div class="features">
+      <div class="card">
+        <i class="fas fa-ticket-alt"></i>
+        <h3 id="card1">Support Ticket</h3>
+        <p id="card1p">Create and track your support request.</p>
+      </div>
+      <div class="card">
+        <i class="fas fa-clock"></i>
+        <h3 id="card2">Fast Response</h3>
+        <p id="card2p">Average response within 24 hours.</p>
+      </div>
+      <div class="card">
+        <i class="fas fa-globe"></i>
+        <h3 id="card3">Multi Language</h3>
+        <p id="card3p">Support in multiple languages.</p>
+      </div>
+    </div>
+
+    <div class="support-box">
+      <div class="ticket" id="ticket"> Ticket ID : PF-100001 </div>
+      <form id="ticketForm">
+        <input id="name" type="text" placeholder="Full Name" required>
+        <input id="email" type="email" placeholder="Email Address" required>
+        <textarea id="message" placeholder="Describe your issue..." required></textarea>
+        <button type="submit" class="send-btn" id="sendBtn"> Send Ticket </button>
+      </form>
+
+      <div class="contact">
+        <h2 id="contactTitle">Contact Support</h2>
+        <p id="contactDesc"> For account issues, payouts, verification or technical assistance, please contact our support team via email. </p>
+        <a href="mailto:support@profunded.com" class="email-btn"> support@profunded.com </a>
+        <div class="stats">
+          <div class="stat">
+            <h3 id="s1">Response Time</h3>
+            <span id="s1v">24 Hours</span>
+          </div>
+          <div class="stat">
+            <h3 id="s2">Availability</h3>
+            <span id="s2v">24/7</span>
+          </div>
+          <div class="stat">
+            <h3 id="s3">Languages</h3>
+            <span id="s3v">Multi Language</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer"> © 2026 ProFunded. All Rights Reserved. </div>
+  </div>
+
+  <!-- Modal جميل بديل التنبيه القديم -->
+  <div id="successModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h2 id="modalTitle">✅ تم الإرسال بنجاح</h2>
+      <p id="modalMessage">تم إرسال مشكلتك بنجاح، سيتم الرد عليك في أقرب وقت على بريدك الإلكتروني.</p>
+      <button class="modal-close" id="closeModalBtn">حسنًا</button>
+    </div>
+  </div>
+
+  <script>
+    // عناصر المودال
+    const modal = document.getElementById('successModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalMessage = document.getElementById('modalMessage');
+
+    // إظهار المودال برسالة ديناميكية
+    function showCustomModal(title, message) {
+      if (modalTitle) modalTitle.innerText = title;
+      if (modalMessage) modalMessage.innerText = message;
+      modal.classList.add('active');
+    }
+
+    // إغلاق المودال
+    function closeModal() {
+      modal.classList.remove('active');
+    }
+
+    closeModalBtn.addEventListener('click', closeModal);
+    // إغلاق عند الضغط على الخلفية
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    // وظيفة إرسال التذكرة (بدون alert)
+    function sendTicket(e) {
+      e.preventDefault();
+
+      // قراءة البيانات (للتحقق فقط ويمكن استخدامها)
+      const userName = document.getElementById("name").value.trim();
+      const userEmail = document.getElementById("email").value.trim();
+      const userMsg = document.getElementById("message").value.trim();
+
+      // تحقق بسيط من الحقول (موجود بالفعل في HTML via required, لكن زيادة أمان)
+      if (!userName || !userEmail || !userMsg) {
+        // إذا لم يتم تعبئة شيء نظهر رسالة بسيطة لكن بنفس المودال مع تنبيه
+        showCustomModal("⚠️ تنبيه", "يرجى ملء جميع الحقول قبل الإرسال.");
+        return;
+      }
+
+      // توليد معرف تذكرة جديد
+      let newTicketId = "PF-" + Math.floor(Math.random() * 900000 + 100000);
+      document.getElementById("ticket").innerHTML = "Ticket ID : " + newTicketId;
+
+      // إظهار المودال الجميل بالرسالة المطلوبة
+      // الرسالة المطلوبة: "تم إرسال مشكلتك وسوف يتم الرد عليك في أقرب وقت على بريدك الإلكتروني"
+      // نستخدم نفس الترجمة حسب اللغة أو نثبتها بشكل ذكي
+      const currentLang = document.getElementById("lang").value;
+      let successTitle = "";
+      let successMsg = "";
+
+      if (currentLang === "ar") {
+        successTitle = "✅ تم الإرسال بنجاح";
+        successMsg = "تم إرسال مشكلتك وسوف يتم الرد عليك في أقرب وقت على بريدك الإلكتروني.";
+      } else if (currentLang === "fr") {
+        successTitle = "✅ Envoyé avec succès";
+        successMsg = "Votre problème a été envoyé. Vous recevrez une réponse sur votre adresse e-mail dans les plus brefs délais.";
+      } else if (currentLang === "es") {
+        successTitle = "✅ Enviado con éxito";
+        successMsg = "Su problema ha sido enviado. Recibirá una respuesta en su correo electrónico lo antes posible.";
+      } else {
+        // english / default
+        successTitle = "✅ Ticket Submitted";
+        successMsg = "Your issue has been sent successfully. You will receive a reply to your email as soon as possible.";
+      }
+
+      // إذا أردنا الاحتفاظ بالرسالة العربية بغض النظر عن اللغة، نكتب التالي (حسب طلب المستخدم بالضبط)
+      // لكن بما أن المستخدم طلب المحتوى بالعربية "تم إرسال مشكلتك ..." – يمكننا جعلها ثابتة بالعربية + ترجمة حسب اللغة
+      // لكن الأفضل إظهار الرسالة الجميلة باللغة التي يستخدمها المستخدم. لكن طلب المستخدم الأساسي: "اريد ان تضهر لي ريالة جميلة مكتوب فيها انه تم ارسال مشكلتك وسوف يتم الرد عليك في اقرب وقت على بريدك الإلكتروني"
+      // سأجعل النص الأساسي في كل الحالات يحمل نفس المعنى ولكن مترجمًا بشكل احترافي.
+      // وكذلك سأعطي الأولوية للعربية إذا كان المتصفح أو الاختيار عربي لكن الرسالة المطلوبة بالعربية.
+      // بحيث تكون تجربة المستخدم رائعة.
+      
+      // تعديل بسيط: إذا كانت اللغة عربية أستخدم النص العربي الجميل المطلوب.
+      if (currentLang === "ar") {
+        successMsg = "تم إرسال مشكلتك وسوف يتم الرد عليك في أقرب وقت على بريدك الإلكتروني.";
+      } else if (currentLang === "en") {
+        successMsg = "Your issue has been sent successfully. You will receive a reply to your email as soon as possible.";
+      } else if (currentLang === "fr") {
+        successMsg = "Votre problème a été envoyé. Vous recevrez une réponse sur votre adresse e-mail dans les plus brefs délais.";
+      } else if (currentLang === "es") {
+        successMsg = "Su problema ha sido enviado. Recibirá una respuesta en su correo electrónico lo antes posible.";
+      }
+
+      // نستخدم الوظيفة لعرض المودال الجميل
+      showCustomModal(successTitle, successMsg);
+
+      // (اختياري) مسح الحقول بعد الإرسال؟ يفضل تركه للمستخدم ولكن يمكن تفعيله.
+      // لكن لتحسين التجربة، لا نمسح البيانات تلقائيًا حتى لا يضطر لإعادة كتابتها إذا احتاجها.
+      // فقط نعرض المودال.
+    }
+
+    // ربط الحدث مع النموذج
+    const form = document.getElementById('ticketForm');
+    form.addEventListener('submit', sendTicket);
+
+    // وظيفة تغيير اللغة (ترجمة كل النصوص + تحديث المودال عند التغيير إن أردنا)
+    function changeLanguage() {
+      const lang = document.getElementById("lang").value;
+      const t = translations[lang];
+      document.body.dir = (lang === "ar") ? "rtl" : "ltr";
+      document.getElementById("title").innerText = t.title;
+      document.getElementById("desc").innerText = t.desc;
+      document.getElementById("card1").innerText = t.ticket;
+      document.getElementById("card1p").innerText = t.ticketDesc;
+      document.getElementById("card2").innerText = t.fast;
+      document.getElementById("card2p").innerText = t.fastDesc;
+      document.getElementById("card3").innerText = t.multi;
+      document.getElementById("card3p").innerText = t.multiDesc;
+      document.getElementById("name").placeholder = t.name;
+      document.getElementById("email").placeholder = t.email;
+      document.getElementById("message").placeholder = t.message;
+      document.getElementById("sendBtn").innerText = t.send;
+      document.getElementById("contactTitle").innerText = t.contact;
+      document.getElementById("contactDesc").innerText = t.contactDesc;
+      document.getElementById("s1").innerText = t.response;
+      document.getElementById("s1v").innerText = t.responseValue;
+      document.getElementById("s2").innerText = t.availability;
+      document.getElementById("s2v").innerText = t.availabilityValue;
+      document.getElementById("s3").innerText = t.languages;
+      document.getElementById("s3v").innerText = t.languagesValue;
+      document.getElementById("backBtn").innerText = t.back;
+
+      // تحديث نص المودال إذا كان مفتوحاً ليس ضرورياً لكن يمكن تحديث الرسائل بشكل عام
+      // لا حاجة لتحديث المودال أثناء تغيير اللغة ما دام مغلقاً.
+    }
+
+    // كائن الترجمات (نفس ما كان موجودًا مع إضافة حق back)
+    const translations = {
+      en: {
+        title: "Support Center",
+        desc: "Professional support available 24/7 for all traders",
+        ticket: "Support Ticket",
+        ticketDesc: "Create and track your support request.",
+        fast: "Fast Response",
+        fastDesc: "Average response within 24 hours.",
+        multi: "Multi Language",
+        multiDesc: "Support in multiple languages.",
+        name: "Full Name",
+        email: "Email Address",
+        message: "Describe your issue...",
+        send: "Send Ticket",
+        contact: "Contact Support",
+        contactDesc: "For account issues, payouts, verification or technical assistance, please contact our support team via email.",
+        response: "Response Time",
+        responseValue: "24 Hours",
+        availability: "Availability",
+        availabilityValue: "24/7",
+        languages: "Languages",
+        languagesValue: "Multi Language",
+        back: "← Back To Dashboard"
+      },
+      ar: {
+        title: "مركز الدعم",
+        desc: "دعم احترافي متاح 24/7 لجميع المتداولين",
+        ticket: "تذكرة الدعم",
+        ticketDesc: "أنشئ وتتبع طلب الدعم الخاص بك",
+        fast: "رد سريع",
+        fastDesc: "متوسط وقت الرد خلال 24 ساعة",
+        multi: "متعدد اللغات",
+        multiDesc: "الدعم متوفر بعدة لغات",
+        name: "الاسم الكامل",
+        email: "البريد الإلكتروني",
+        message: "اشرح مشكلتك هنا...",
+        send: "إرسال التذكرة",
+        contact: "تواصل مع الدعم",
+        contactDesc: "لأي مشكلة متعلقة بالحساب أو الدفعات أو التحقق يرجى التواصل معنا عبر البريد الإلكتروني.",
+        response: "وقت الرد",
+        responseValue: "24 ساعة",
+        availability: "التوفر",
+        availabilityValue: "24/7",
+        languages: "اللغات",
+        languagesValue: "متعددة",
+        back: "← العودة إلى لوحة التحكم"
+      },
+      fr: {
+        title: "Centre de Support",
+        desc: "Support professionnel disponible 24h/24 et 7j/7",
+        ticket: "Ticket Support",
+        ticketDesc: "Créer et suivre votre demande.",
+        fast: "Réponse Rapide",
+        fastDesc: "Réponse moyenne sous 24 heures.",
+        multi: "Multilingue",
+        multiDesc: "Support disponible en plusieurs langues.",
+        name: "Nom Complet",
+        email: "Adresse E-mail",
+        message: "Décrivez votre problème...",
+        send: "Envoyer le Ticket",
+        contact: "Contacter le Support",
+        contactDesc: "Pour toute question liée au compte ou aux paiements, contactez-nous par e-mail.",
+        response: "Temps de Réponse",
+        responseValue: "24 Heures",
+        availability: "Disponibilité",
+        availabilityValue: "24/7",
+        languages: "Langues",
+        languagesValue: "Multilingue",
+        back: "Retour au Tableau de Bord"
+      },
+      es: {
+        title: "Centro de Soporte",
+        desc: "Soporte profesional disponible 24/7",
+        ticket: "Ticket de Soporte",
+        ticketDesc: "Crea y sigue tu solicitud.",
+        fast: "Respuesta Rápida",
+        fastDesc: "Respuesta promedio en 24 horas.",
+        multi: "Multilenguaje",
+        multiDesc: "Soporte disponible en varios idiomas.",
+        name: "Nombre Completo",
+        email: "Correo Electrónico",
+        message: "Describe tu problema...",
+        send: "Enviar Ticket",
+        contact: "Contactar Soporte",
+        contactDesc: "Para problemas de cuenta o pagos, contáctenos por correo electrónico.",
+        response: "Tiempo de Respuesta",
+        responseValue: "24 Horas",
+        availability: "Disponibilidad",
+        availabilityValue: "24/7",
+        languages: "Idiomas",
+        languagesValue: "Multilenguaje",
+        back: "Volver al Panel"
+      }
+    };
+
+    // تعيين اللغة الافتراضية (إنجليزية)
+    document.getElementById("lang").value = "en";
+    changeLanguage();
+
+    // في حالة الرغبة بإغلاق المودال بعد 5 ثوانٍ تلقائياً
+    // (اختياري ولكن يضيف لمسة احترافية)
+    function autoCloseModal() {
+      if (modal.classList.contains('active')) {
+        setTimeout(() => {
+          closeModal();
+        }, 5000);
+      }
+    }
+    // إضافة مراقب لظهور المودال ثم تفعيل الإغلاق التلقائي
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class' && modal.classList.contains('active')) {
+          autoCloseModal();
+        }
+      });
+    });
+    observer.observe(modal, { attributes: true });
+  </script>
+</body>
+
+</html>
