@@ -666,6 +666,9 @@
     document.querySelector('#viewPlansBtn span').innerText = t.viewPlans;
     // Update action card buttons if needed
    document.querySelectorAll('.quickBuyBtn').forEach(btn => btn.addEventListener('click', () => showDemoMessage(translations[currentLang].buyChallengeTitle)));
+   document.querySelector('.supportCardBtn').onclick = () => {
+    window.location.href = 'sport.html';
+};
 document.querySelectorAll('.rulesBtn').forEach(btn => btn.addEventListener('click', () => showDemoMessage(translations[currentLang].rulesTitle)));
 document.querySelectorAll('.profileCardBtn').forEach(btn => btn.addEventListener('click', () => {
     window.location.href = 'profile.html';
